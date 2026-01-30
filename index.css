@@ -25,11 +25,11 @@
 
 	}
 	50% {
-		background-image: url('images/bg_orange.jpeg');
+		background-image: url('images/bg_orange.webp');
         background-position: 50% 35%;
 	}
 	75% {
-		background-image: url('images/bg_blue.jpeg');
+		background-image: url('images/bg_blue.webp');
         background-position: 50% 35%;
 	}
 	100%{
@@ -60,7 +60,7 @@ a:hover {
 
 body {
 
-    background-image: url('images/bg_poc.jpeg');
+    background-image: url('images/bg_poc.webp');
     background-size: cover;
     background-position: 50% 35%;
     background-repeat: no-repeat;
