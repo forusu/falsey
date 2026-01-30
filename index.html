@@ -79,6 +79,7 @@
               </span>
 
               <script>
+
                 document.addEventListener("DOMContentLoaded", () => {
                   const textContainer = document.querySelector(".text-subtitle");
                   const headers = document.querySelectorAll(".bios");
@@ -108,6 +109,39 @@
                     });
                   });
                 });
+
+                document.addEventListener("DOMContentLoaded", () => {
+                const idle = document.querySelector(".her.idle");
+                const blink = document.querySelector(".her.blink");
+                const heranim = document.querySelector(".heranim");
+
+                if (!idle || !blink || !heranim) return;
+
+                function blinkOnce() {
+                  // Don't blink while speaking
+                  if (heranim.matches(":hover")) return;
+
+                  idle.style.opacity = "0";
+                  blink.style.opacity = "1";
+
+                  setTimeout(() => {
+                    blink.style.opacity = "0";
+                    idle.style.opacity = "1";
+                  }, 120); // blink duration
+                }
+
+                function scheduleBlink() {
+                  const delay = Math.random() * 4000 + 2500; // 2.5–6.5s
+                  setTimeout(() => {
+                    blinkOnce();
+                    scheduleBlink();
+                  }, delay);
+                }
+
+                scheduleBlink();
+              });
+
+
                 </script>
         </div>
 
@@ -122,6 +156,8 @@
 
   <div class="heranim">
     <img class="her idle" src="images/idle_nh.png">
+    <img class="her blink" src="images/idle_blink_nh.png">
+    <img class="her speak" src="images/speak.png">
   </div>
 
 </body>
