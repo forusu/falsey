@@ -1,0 +1,271 @@
+:root {
+	--black: #bbbbbb;
+	--white: #121212;
+	--hl1: #1f89c2;
+	--hl: #fcb531;
+	--dgray: #0f0f0f;
+	--lgray: #1f1f1f
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	/* box-sizing: border-box; */
+	/* zoom: 95%; */
+    text-rendering: geometricprecision;
+}
+
+@font-face {
+	font-family: 'VCR'; 
+	src: url('assets/VCR.ttf') format('truetype');
+  }
+
+@keyframes backgroundChange {
+	25% {
+
+	}
+	50% {
+		background-image: url('images/bg_orange.jpeg');
+        background-position: 50% 35%;
+	}
+	75% {
+		background-image: url('images/bg_blue.jpeg');
+        background-position: 50% 35%;
+	}
+	100%{
+        
+    }
+}
+
+html {
+    font-size: 16px;
+    overflow-y: scroll;
+}
+
+#hud {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+body {
+
+    background-image: url('images/bg_poc.jpeg');
+    background-size: cover;
+    background-position: 50% 45%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #121212;
+    animation-name: backgroundChange;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+
+    color: #fff;
+    /* height: 100vh; */
+	width: 100%;
+
+    font-family: VCR;
+    font-size: 0.95rem;
+	line-height: 1.35;
+
+	padding: 0;
+	transition: .3s;
+	scrollbar-color: var(--lgray) #0f0f0f;
+	scrollbar-width: .5rem;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+   	-ms-user-select: none;
+   	user-select: none;
+
+    min-height: 100vh;
+    overflow-y: auto;
+
+}
+
+html, body {
+    overflow-x: hidden;
+}
+
+.flex-2 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+div.foreground {
+    min-height: 100vh;
+    width: 100%;
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    /* position: fixed; */
+}
+
+.inner {
+	height: 50%;
+	width: 75%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0;
+	position: absolute;
+	padding-bottom: 0
+}
+
+.container {
+	/* position: fixed; */
+    width: 100%;
+    max-width: 1100px;
+    margin-left: 10vw;
+    margin-right: auto;
+    padding: 4rem 2rem;
+}
+
+@keyframes intro {
+    from {
+        background-image: url('images/idle_blink_nh');
+        translate: 0 100vh;
+        scale: 100% 1;
+      }
+    
+      to {
+        translate: 0 0;
+        scale: 100% 1;
+      }
+    }
+
+@keyframes dropShadow {
+    25%{
+        background-image: url('images/idle_nh');
+        filter: none;
+      }
+      100% {
+        filter: drop-shadow(20px 10px 0px #eeb115)
+      }
+}
+
+
+.heranim {
+    position: fixed;
+    bottom: 0;
+    right: 10vw;
+    width: clamp(520px, 28vw, 820px);
+    z-index: 10;
+    pointer-events: none;
+    transform: translateY(5vh);
+}
+
+.heranim img {
+    grid-area: stack;
+    width: 100%;
+    height: 100%;
+}
+
+.heranim .her.idle {
+    width: 100%
+}
+
+.her {
+    /* transform: rotate(8deg); */
+    animation-name: intro, dropShadow;
+    animation-duration: 2s, 4s;
+    animation-iteration-count: 1, 1;
+    animation-fill-mode: forwards;
+    animation-delay: 0s, 2s;
+    /* filter: drop-shadow(30px 10px 0px #fabd2e); */
+}
+
+#logo {
+    width: 5%;
+}
+
+.text-title {
+	margin-top: 25%;
+	font-size: 42px;
+	text-align: left;
+	opacity: 1;
+	word-spacing: 1px;
+	color: var(--text, #fff)
+}
+
+.text-subtitle {
+    display: flow-root;
+    align-self: flex-start;
+    margin-bottom: 1.5rem;
+    max-width: 20%;
+    padding: 20px;
+    background-color: rgba(30, 30, 30, 0.56);
+    box-shadow: 10px 10px 1px rgb(41, 41, 41);
+    overflow-anchor: none;
+}
+
+.text-subtitle-small {
+    display: flow-root;
+    align-self: flex-start;
+    margin-bottom: 1.5rem;
+    max-width: 20%;
+    padding: 20px;
+    background-color: rgba(30, 30, 30, 0.56);
+    box-shadow: 10px 10px 1px rgb(41, 41, 41);
+    overflow-anchor: none;
+}
+
+.bios {
+    cursor: pointer;
+    display: block;
+}
+.bios:hover {
+    color: var(--hl1, #fff)
+}
+
+.bio {
+    display: none;
+    max-height: 0;
+    font-size: 0;
+    opacity: 0;
+    overflow: hidden;
+    overflow-anchor: none;
+  
+    transition:
+      max-height 0.35s ease,
+      opacity 0.2s ease;
+  
+    margin: 0;
+  }
+  
+.bio.open {
+    font-size: inherit;
+    max-height: 1000px;
+    opacity: 1;
+}
+
+.spacer {
+    padding: 50px;
+}
+
+.hl {
+	color: var(--hl);
+	font-weight: normal;
+}
+
+
+@media only screen and (max-width: 768px) {
+    body {
+      background-color: #121212; /* Solid black background for mobile */
+      background-image: none !important; /* Removes the background image */
+    }
+
+    .her {
+        display: none;
+    }
+
+    .text-subtitle .text-title {
+        text-align: center;
+        position: absolute;
+        max-width: none !important;
+    }
+
+    .container {
+        position: absolute
+    }
+  }

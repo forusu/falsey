@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>falsey.mom</title>
+  <link id="style" rel="stylesheet" href="index.css" media>
+  <link id="icon" rel="icon" href="assets/yh.svg">
+  <link rel="preload" href="assets/VCR.ttf" as="font" crossorigin>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="falsequalified, fsq, aquifer, esquisse, pngtuber, streamer, portfolio">
+  <meta name="og:title" content="falsequalified">
+  <meta name="og:description" content="Portfolio of Melissa, socials and projects">
+  <meta name="description" content="Portfolio of Melissa, socials and projects">
+  
+  <meta property="og:image" content="https://falsey.mom/images/background.jpg">
+  <meta property="og:image:alt" content="A striking sunset.">
+  <meta property="og:image:width" content="2048">
+  <meta property="og:image:height" content="956">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@fsqs_">
+  <meta name="twitter:creator" content="@fsqs_">
+	
+  <meta name="og:author" content="made by Melissa <3">
+  <meta name="author" content="made by Melissa <3">
+  <meta name="theme-color" content="#ffb33b">
+  <script src="https://kit.fontawesome.com/47ac9c0ac4.js" async></script>
+  <script src="js.js" type="application/javascript" defer></script>
+  <meta charset="utf-8">
+</head>
+
+<body class="theme">
+
+  <div class="foreground">
+
+    <section class="flex-2">       
+
+      <div class="container">
+
+        <h1 class="text-title">> FALSEQUALIFIED</span></h1>
+
+        <p><span class="text-subtitle-small">
+          
+            My name is <span class="hl">Melissa</span>. <br>
+
+        </p></span>
+        <div class="text-subtitle">
+          
+            <span class="bios" onclick="bioExpand">> Who am I? </span>
+              <span class="bio">
+                <br>
+                I'm a <span class="hl">PNGTuber, webdeveloper, social engineer, professional photographer, mineral and botany enthusiast, and an undergraduate in disaster crisis management</span>
+                interested in programming, linguistics, philosophy, astrophysics, nuclear reactors, meteorology and science.
+                <br>
+                <br>
+              </span>
+
+            <span class="bios" onclick="bioExpand">> Languages</span>
+              <span class="bio">
+                <br>
+                I am able to speak 4 languages: <span class="hl">English, Russian, Japanese and German</span>
+                and I'm learning other languages such as <span class="hl">Swedish, Finnish, Indonesian and Estonian.</span>
+                <br>
+                <br>
+              </span>
+
+            <span class="bios" onclick="bioExpand">> Goals</span>
+              <span class="bio">
+                <br>
+                My lifetime goal is to <span class="hl">achieve finesse</span> in as many fields as I can.
+                I'm an improvement enthusiast and I enjoy gaining knowledge. Some of my best skillsets are:
+                <span class="hl">arts, typing, social engineering, OSINT, security, languages and physics.
+              </span>
+
+              <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  const textContainer = document.querySelector(".text-subtitle");
+                  const bios = document.querySelectorAll(".bios");
+                
+                  bios.forEach(header => {
+                    header.addEventListener("click", () => {
+                      const bio = header.nextElementSibling;
+                      bio.classList.toggle("open");
+                      if (!bio || !bio.classList.contains("bio")) return;
+                
+                      const isOpening = bio.style.display === "none" || bio.style.display === "";
+                      bio.style.display = isOpening ? "block" : "none";
+                
+                      const anyOpen = Array.from(document.querySelectorAll(".bio")).some(b => b.style.display === "block");
+                
+                      textContainer.style.maxWidth = anyOpen ? "60%" : "20%";
+                    });
+                  });
+                });
+                </script>
+        </div>
+
+
+        
+      
+      </div>
+
+  </section>
+
+  </div>
+
+  <div class="heranim">
+    <img class="her idle" src="images/idle_nh.png">
+  </div>
+
+</body>
+
+
+</html>
+
