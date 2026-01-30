@@ -129,7 +129,8 @@ div.foreground {
     max-width: 1100px;
     margin-left: 10vw;
     margin-right: auto;
-    padding: 1rem 2rem;
+    transform: translateY(-10vh)
+    /* padding: 1rem 2rem; */
 }
 
 @keyframes intro {
@@ -324,6 +325,10 @@ div.foreground {
     }
     .text-subtitle-small {
         min-width: 20vw;
+    }
+
+    .container {
+        transform: none;
     }
 
     .heranim {
