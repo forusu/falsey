@@ -50,7 +50,7 @@
               <span class="bio">
                 <section>
                 <br>
-                I'm a <span class="hl">PNGTuber, webdeveloper, social engineer, professional photographer, mineral and botany enthusiast, and an undergraduate in disaster crisis management</span>
+                I'm a <span class="hl"> <a href="https://twitch.tv/falsequalified" target="_blank">PNGTuber</a> | webdeveloper | social engineer | photographer | mineral enthusiast | undergraduate in disaster crisis management</span>
                 interested in programming, linguistics, philosophy, astrophysics, nuclear reactors, meteorology and science.
                 <br>
                 <br>
@@ -61,22 +61,32 @@
               <span class="bio">
                 <section>
                 <br>
-                I am able to speak 4 languages: <span class="hl">English, Russian, Japanese and German</span>
-                and I'm learning other languages such as <span class="hl">Swedish, Finnish, Indonesian and Estonian.</span>
+                Can speak: <span class="hl">English, Russian, Japanese, German</span><br>
+                Learning: <span class="hl">Swedish, Finnish, Indonesian, Estonian.</span>
                 <br>
                 <br>
                 </section>
               </span>
 
-            <span class="bios" onclick="bioExpand">> Goals</span>
+            <span class="bios" onclick="bioExpand">> Skills</span>
               <span class="bio">
                 <section>
                 <br>
-                My lifetime goal is to <span class="hl">achieve finesse</span> in as many fields as I can.
-                I'm an improvement enthusiast and I enjoy gaining knowledge. Some of my best skillsets are:
-                <span class="hl">arts, typing, social engineering, OSINT, security, languages and physics.
+                  Work in progress
                 </section>
               </span>
+
+            <span class="bios" onclick="bioExpand">> Projects</span>
+              <span class="bio">
+                <section>
+                <br>
+                  Work in progress
+                </section>
+              </span>
+        </div>
+       <!-- <p><span class="text-subtitle-small">
+         Made with 💛 by <span class="hl">Melissa</span>. <br>
+       </div></p>      -->
 
               <script>
 
@@ -113,20 +123,34 @@
                 document.addEventListener("DOMContentLoaded", () => {
                 const idle = document.querySelector(".her.idle");
                 const blink = document.querySelector(".her.blink");
+                const speakblink = document.querySelector(".her.speakblink");
                 const heranim = document.querySelector(".heranim");
 
                 if (!idle || !blink || !heranim) return;
 
                 function blinkOnce() {
                   // Don't blink while speaking
-                  if (heranim.matches(":hover")) return;
 
                   idle.style.opacity = "0";
+                  if (heranim.matches(":hover")) {
+                    speakblink.style.opacity ="1"
+                  }
                   blink.style.opacity = "1";
 
                   setTimeout(() => {
+
+                    if (heranim.matches(":hover")) {
+                      idle.style.opacity = "1";
+                      blink.style.opacity ="0";
+                      speakblink.style.opacity ="0"
+                    } else {
+
+                    speakblink.style.opacity ="0";
                     blink.style.opacity = "0";
                     idle.style.opacity = "1";
+                  
+                  }
+
                   }, 120); // blink duration
                 }
 
@@ -143,7 +167,7 @@
 
 
                 </script>
-        </div>
+        
 
 
         
@@ -158,6 +182,7 @@
     <img class="her idle" src="images/idle_nh.png">
     <img class="her blink" src="images/idle_blink_nh.png">
     <img class="her speak" src="images/speak.png">
+    <img class="her speakblink" src="images/speak_blink.png">
   </div>
 
 </body>
