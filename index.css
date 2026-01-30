@@ -21,54 +21,26 @@
   }
 
 @keyframes backgroundChange {
-	25% {
-
-	}
-	50% {
-		background-image: url('images/bg_orange.webp');
-        background-position: 50% 35%;
-	}
-	75% {
-		background-image: url('images/bg_blue.webp');
-        background-position: 50% 35%;
-	}
-	100%{
-        
-    }
-}
-
-html {
-    font-size: 16px;
-    overflow-y: scroll;
-}
-
-#hud {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 9999;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-a:hover {
-    color: #1f89c2;
+    0%, 30% {
+        opacity: 0;
+      }
+    
+      40%, 60% {
+        opacity: 1;
+      }
+    
+      70%, 100% {
+        opacity: 0;
+      }
 }
 
 body {
-
-    background-image: url('images/bg_poc.webp');
-    background-size: cover;
-    background-position: 50% 35%;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background: none;
     background-color: #121212;
-    animation-name: backgroundChange;
     animation-duration: 20s;
     animation-iteration-count: infinite;
+    position: relative;
+    z-index: 0;
 
     color: #fff;
     /* height: 100vh; */
@@ -95,9 +67,82 @@ body {
 
 }
 
+.bg-stack {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    pointer-events: none;
+}
+
+.bg {
+    position: absolute;
+    inset: 0;
+  
+    background-size: cover;
+    background-position: 50% 35%;
+    background-repeat: no-repeat;
+}
+
+@keyframes bgOrange {
+    0%, 40%, 100% {
+      opacity: 0;
+    }
+    50%, 70% {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes bgBlue {
+    0%, 60%, 100% {
+      opacity: 0;
+    }
+    70%, 90% {
+      opacity: 1;
+    }
+  }
+
+.bg.base {
+    background-image: url("images/bg_poc.webp");
+    opacity: 1; 
+}
+
+.bg.orange {
+    background-image: url("images/bg_orange.webp");
+    animation: bgOrange 20s infinite;
+}
+
+.bg.blue {
+    background-image: url("images/bg_blue.webp");
+    animation: bgBlue 20s infinite;
+}
+
+
+
 html, body {
     overflow-x: hidden;
 }
+
+html {
+    font-size: 16px;
+    overflow-y: scroll;
+}
+
+#hud {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #1f89c2;
+}
+
 
 .flex-2 {
     display: flex;
