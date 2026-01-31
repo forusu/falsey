@@ -35,6 +35,8 @@
     const now = new Date();
     const hours = now.getHours();
     const minutes = now.getMinutes();
+    h = checkTime(hours);
+    m = checkTime(minutes);
 
     const shortTimeZone = new Intl.DateTimeFormat(undefined, { timeZoneName: 'short' })
     .formatToParts(now)
@@ -43,7 +45,12 @@
 
     setTimeout(startTime, 1000);
 
-    document.getElementById('clock').innerHTML = shortTimeZone + " " + hours + ":" + minutes
+    function checkTime(i) {
+    if (i < 10) {i = "0" + i};
+    return i;
+    }
+
+    document.getElementById('clock').innerHTML = shortTimeZone + " " + h + ":" + m
 }
 </script>
 
