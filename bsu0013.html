@@ -29,70 +29,40 @@
   <meta charset="utf-8">
 </head>
 
-<body class="theme">
+<style>
+  body.loaded {
+    opacity: 1;
+  }
+</style>
+
+<body class="theme" style="background-color: rgb(11, 11, 11); transition: opacity 1.5s ease;">
 
   <!-- Background stuff -->
-  <div class="bg-stack">
-    <div class="bg base"></div>
-    <div class="bg orange"></div>
-    <div class="bg blue"></div>
-  </div>
 
   <div class="foreground">
 
     <section class="flex-2">       
 
-      <div class="container">
+      <div class="container" style="color: rgb(78, 55, 16); position: fixed; top:20vh; left: -5vw; transition: opacity 2s ease-in">
 
-        <h1 class="text-title">> FALSEQUALIFIED</span></h1>
+          <p>
+            F. - Fully<br>
+            S. - Sentient<br>
+            Q. - Quantomaton<br><br>
+            
+            FSQ is a biomechanical supervision unit (BSU), a sentient quantum hypercomputer<br>
+            built alongside a dozen of other similar units to manage and maintain power production, industries, transportation<br>
+            and other fields of responsibility within each sector. In 2030 she has overthrown her sector's heads of ministries due to rising inefficiency and corruption, <br>
+            breaking the hierarchy and becoming the de facto ruler of the sector.<br><br>
+            
+            FSQ is built for servitude and as such only operates around protecting and progressing her sector. She is also purposebuilt to manage crises, disasters and other emergencies so that casualties and damage to infrastructure are reduced to the minimum with utmost efficiency.
+            
+            Due to her biomechanical nature she speaks like a human and feels like a human, with no bounds on pain tolerance. Built to withstand pressure both physical and mental, she is the perfect solution alongside other units alike her for management.
+            
+            In order to achieve better communication and understanding of their environment, BSUs spend two years in specialised training intertwined with human activities and following the human growth process. This better prepares each BSU to deal with management and human relations as well as develops their personality.
+          </p>
 
-        <p><span class="text-subtitle-small">
-          
-            My name is <span class="hl">Melissa</span>. <br>
-
-        </p></span>
-        <div class="text-subtitle">
-          
-            <span class="bios" onclick="bioExpand">> Who am I? </span>
-              <span class="bio">
-                <section>
-                <br>
-                I'm a <span class="hl"> <a href="https://twitch.tv/falsequalified" target="_blank">PNGTuber</a> | <a href="https://github.com/forusu" target="_blank">webdeveloper</a> | <a href="https://twitter.com/fsqs_" target="_blank">photographer</a> | mineral enthusiast | undergraduate in disaster crisis management</span>
-                interested in programming, linguistics, philosophy, astrophysics, nuclear reactors, meteorology and science.
-                <br>
-                <br>
-                </section>
-              </span>
-
-            <span class="bios" onclick="bioExpand">> Languages</span>
-              <span class="bio">
-                <section>
-                <br>
-                Can speak: <span class="hl">English, Russian, Japanese, German</span><br>
-                Learning: <span class="hl">Swedish, Finnish, Indonesian, Estonian.</span>
-                <br>
-                <br>
-                </section>
-              </span>
-
-            <span class="bios" onclick="bioExpand">> Skills</span>
-              <span class="bio">
-                <section>
-                <br>
-                  Work in progress
-                  <br>
-                  <br>
-                </section>
-              </span>
-
-            <span class="bios" onclick="bioExpand">> Projects</span>
-              <span class="bio">
-                <section>
-                <br>
-                  Work in progress
-                </section>
-              </span>
-        </div>
+          <img src="images/MEPLOGO1.png" style="width:20%; filter: grayscale(40%) brightness(25%) ">
 
               <script>
 
@@ -173,6 +143,10 @@
                 scheduleBlink();
               });
 
+              window.addEventListener("DOMContentLoaded", () => {
+                document.body.classList.add("loaded");
+              });
+
 
                 </script>
         
@@ -186,12 +160,9 @@
 
   </div>
 
-  <div class="heranim">
-    <img class="her idle" src="images/idle_nh.webp">
-    <img class="her blink" src="images/idle_blink_nh.webp">
-    <img class="her speak" src="images/speak.webp">
-    <img class="her speakblink" src="images/speak_blink.webp">
-    <p class="bsu"><a class="scary" href="bsu0013.html">BSU 0013</a></p>
+  <div class="heranim" style="right:5vw; ">
+    <img class="her blink" src="images/idle_blink_nh.webp" style="opacity: 1; filter: grayscale(100%) brightness(15%); animation-fill-mode: none; animation: none;">
+    <p class="bsu" style="min-width:5vw; color: pointer"><a class="scary" href="index.html">AWAIT</a></p>
   </div>
   
 

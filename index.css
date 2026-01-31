@@ -139,6 +139,11 @@ a {
     text-decoration: none;
 }
 
+.scary:hover {
+    color: #fff;
+    pointer-events: auto;
+}
+
 a:hover {
     color: #1f89c2;
 }
@@ -154,8 +159,8 @@ div.foreground {
     min-height: 100vh;
     width: 100%;
     backdrop-filter: blur(8px);
-    z-index: 100;
-    /* position: fixed; */
+    z-index: 1;
+    position: fixed;
 }
 
 .inner {
@@ -207,9 +212,27 @@ div.foreground {
     50% { transform: translateY(5.8vh) scale(1); }
 }
 
+.bsu {
+    transition: 0.2s ease-in;
+    background-color: #0f0f0f;
+    color: #fff;
+    opacity: 0;
+    font-size: 1rem;
+    position: fixed;
+    max-width: auto;
+    right: 30vw;
+    top: 35vh;
+    padding: 1px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: auto;
+    text-align:center;
+    z-index: 9999;
+}
+
 .heranim {
     animation: breathe 4s ease-in-out infinite;
-
+    image-rendering: crisp-edges;
     position: fixed;
     bottom: 0;
     right: 16vw;
@@ -244,15 +267,19 @@ div.foreground {
 .heranim:hover .her.idle,
 .heranim:hover .her.blink,
 .heranim:hover .her.speakblink {
-  opacity: 0;
+    opacity: 0;
 }
 
 .heranim:hover .her.speak {
-  opacity: 1;
+    opacity: 1;
+}
+.heranim:hover .bsu {
+    opacity: 1;
+    transition: 0.2s ease-in;
 }
 
 .her {
-    /* transform: rotate(8deg); */
+    transform: rotate(8deg);
     animation-name: intro, dropShadow;
     animation-duration: 2s, 4s;
     animation-iteration-count: 1, 1;
@@ -267,7 +294,7 @@ div.foreground {
 
 .text-title {
 	margin-top: 25%;
-	font-size: 42px;
+	font-size: 2rem;
 	text-align: left;
 	opacity: 1;
 	word-spacing: 1px;
@@ -334,8 +361,8 @@ div.foreground {
 
 @media only screen and (max-width: 768px) {
     body {
-      background-color: #121212; /* Solid black background for mobile */
-      background-image: none !important; /* Removes the background image */
+      background-color: #121212;
+      background-image: none !important; 
       flex-direction: column;
     }
 
@@ -374,6 +401,25 @@ div.foreground {
 
     .container {
         transform: none;
+    }
+
+    .bsu {
+        transition: 0.2s ease-in;
+        background-color: #0f0f0f;
+        color: #fff;
+        opacity: 0;
+        font-size: 2rem;
+        position: fixed;
+        max-width: auto;
+        display: inline-block;
+        right: 30vw;
+        top: 65vh;
+        padding: 1px;
+        padding-left: 20px;
+        padding-right: 20px;
+        height: auto;
+        text-align:center;
+        z-index: 9999;
     }
 
     .heranim {
