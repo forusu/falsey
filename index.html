@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>falsey.mom</title>
-  <link id="style" rel="stylesheet" href="index.css" media>
+  <link id="style" rel="stylesheet" href="assets/index.css" media>
+  <link id="style" rel="stylesheet" href="assets/crt.css" media>
   <link id="icon" rel="icon" href="assets/yh.svg">
   <link rel="preload" href="assets/VCR.ttf" as="font" crossorigin>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,108 +26,29 @@
   <meta name="author" content="made by Melissa <3">
   <meta name="theme-color" content="#ffb33b">
   <script src="https://kit.fontawesome.com/47ac9c0ac4.js" async></script>
-  <script src="js.js" type="application/javascript" defer></script>
+  <script src="scripts/index.js" type="application/javascript"></script>
   <meta charset="utf-8">
 </head>
 
-<style>
-  /* This was vibe coded because I can't even begin figuring out how to make a CRT effect, will be changed another time maybe */
-  .crt {
+<script>
+  function startTime() {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+
+    const shortTimeZone = new Intl.DateTimeFormat(undefined, { timeZoneName: 'short' })
+    .formatToParts(now)
+    .find(part => part.type === 'timeZoneName')
+    .value;
+
+    setTimeout(startTime, 1000);
+
+    document.getElementById('clock').innerHTML = shortTimeZone + " " + hours + ":" + minutes
+}
+</script>
+
+<body class="theme" onload="startTime()">
   
-  mix-blend-mode: screen;
-
-  filter: brightness(1.95) contrast(0.05);
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-
-  background:
-    /* Scanlines */
-    repeating-linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.06) 0px,
-      rgba(255,255,255,0.06) 1px,
-      rgba(0,0,0,0) 2px,
-      rgba(0,0,0,0) 4px
-    ),
-    /* Noise */
-    repeating-linear-gradient(
-      to right,
-      rgba(255,255,255,0.015) 0px,
-      rgba(0,0,0,0.015) 1px,
-      rgba(255,255,255,0.015) 2px
-    );
-
-  animation:
-    crt-flicker 0.15s infinite,
-    crt-noise-move 0.6s infinite;
-}
-
-@keyframes crt-flicker {
-  0%   { opacity: 0.95;}
-  50%  { opacity: 1;}
-  100% { opacity: 0.96; }
-}
-
-@keyframes crt-noise-move {
-  0%   { background-position: 0 0, 0 0; }
-  100% { background-position: 0 4px, 6px 0.3; }
-}
-.crt::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.05),
-      rgba(0,0,0,0.05),
-      rgba(255,255,255,0.05)
-    );
-  opacity: 0.05;
-  animation: crt-roll 6s linear infinite;
-}
-
-@keyframes crt-roll {
-  0%   { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
-}
-
-
-.crt-screen {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-
-  transform:
-    perspective(1200px)
-    scale(1.03);
-
-  border-radius: 2.5%;
-  overflow: hidden;
-}
-
-.crt-screen::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-
-  background:
-    radial-gradient(
-      ellipse at center,
-      rgba(90, 90, 90, 0.06) 0%,
-      rgba(0,0,0,0.25) 70%,
-      rgba(0,0,0,0.45) 100%
-    );
-
-  mix-blend-mode: multiply;
-}
-</style>
-
-
-<body class="theme">
   <div class="crt"></div>
   <div class="crt-screen">
     
@@ -135,10 +57,14 @@
     <div class="bg base"></div>
     <div class="bg orange"></div>
     <div class="bg blue"></div>
+    <div class="bg back"></div>
+    <div class="bg orange2"></div>
+    <div class="bg blue2"></div>
+    <div class="bg blue3"></div>
   </div>
 
   <div class="foreground">
-
+  <p id="clock"></p>
     <section class="flex-2">       
 
       <div class="container">
@@ -192,89 +118,6 @@
                 </section>
               </span>
         </div>
-
-              <script>
-
-                document.addEventListener("DOMContentLoaded", () => {
-                  const textContainer = document.querySelector(".text-subtitle");
-                  const headers = document.querySelectorAll(".bios");
-                  const bios = document.querySelectorAll(".bio");
-                  
-                  headers.forEach(header => {
-                    header.addEventListener("click", () => {
-                      const bio = header.nextElementSibling;
-                      if (!bio || !bio.classList.contains("bio")) return;
-                
-                      const isOpening = !bio.classList.contains("open");
-                
-                      bios.forEach(b => b.classList.remove("open"));
-                
-                      if (isOpening) bio.classList.add("open");
-                
-                      // Container resize logic
-                      if (!isOpening) {
-                      setTimeout(() => {
-                        textContainer.style.maxWidth = "20%";
-                        textContainer.style.transition = "0.1s ease-in";
-                      }, 200);
-                      } else {
-                        textContainer.style.maxWidth = "60%";
-                        textContainer.style.transition = "0.1s ease-in";
-                      }
-                    });
-                  });
-                });
-
-                document.addEventListener("DOMContentLoaded", () => {
-                const idle = document.querySelector(".her.idle");
-                const blink = document.querySelector(".her.blink");
-                const speakblink = document.querySelector(".her.speakblink");
-                const heranim = document.querySelector(".heranim");
-
-                if (!idle || !blink || !heranim) return;
-
-                function blinkOnce() {
-
-                  idle.style.opacity = "0";
-                  if (heranim.matches(":hover")) {
-                    speakblink.style.opacity ="1"
-                  }
-                  blink.style.opacity = "1";
-
-                  setTimeout(() => {
-
-                    if (heranim.matches(":hover")) {
-                      idle.style.opacity = "1";
-                      blink.style.opacity ="0";
-                      speakblink.style.opacity ="0"
-                    } else {
-
-                    speakblink.style.opacity ="0";
-                    blink.style.opacity = "0";
-                    idle.style.opacity = "1";
-                  
-                  }
-
-                  }, 120);
-                }
-
-                function scheduleBlink() {
-                  const delay = Math.random() * 4000 + 2500; // 2.5–6.5s
-                  setTimeout(() => {
-                    blinkOnce();
-                    scheduleBlink();
-                  }, delay);
-                }
-
-                scheduleBlink();
-              });
-
-
-                </script>
-        
-
-
-        
       
       </div>
 

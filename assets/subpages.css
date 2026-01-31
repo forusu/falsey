@@ -17,7 +17,7 @@
 
 @font-face {
 	font-family: 'VCR'; 
-	src: url('assets/VCR.ttf') format('truetype');
+	src: url('VCR.ttf') format('truetype');
   }
 
 @keyframes backgroundChange {
@@ -36,7 +36,8 @@
 
 body {
     background: none;
-    background-color: #121212;
+    background-color: rgb(11, 11, 11); 
+    transition: opacity 1.5s ease;
     animation-duration: 20s;
     animation-iteration-count: infinite;
     position: relative;
@@ -67,64 +68,17 @@ body {
 
 }
 
-.bg-stack {
-    position: fixed;
-    inset: 0;
-    z-index: -10;
-    pointer-events: none;
+body.loaded {
+  opacity: 1;
 }
 
-.bg {
-    position: absolute;
-    inset: 0;
-  
-    background-size: cover;
-    background-position: 50% 45%;
-    background-repeat: no-repeat;
-}
+p {
+  color: #9e670e;
 
-@keyframes bgOrange {
-    0%, 40%, 100% {
-      opacity: 0;
-    }
-    50%, 70% {
-      opacity: 1;
-    }
-  }
-  
-  @keyframes bgBlue {
-    0%, 60%, 100% {
-      opacity: 0;
-    }
-    70%, 90% {
-      opacity: 1;
-    }
-  }
-
-.bg.base {
-    background-image: url("images/bg_poc.webp");
-    opacity: 1; 
-}
-
-.bg.orange {
-    background-image: url("images/bg_orange.webp");
-    animation: bgOrange 20s infinite;
-}
-
-.bg.blue {
-    background-image: url("images/bg_blue.webp");
-    animation: bgBlue 20s infinite;
-}
-
-
-
-html, body {
-    overflow-x: hidden;
-}
-
-html {
-    font-size: 16px;
-    overflow-y: scroll;
+  text-shadow:
+    0 0 2px rgba(196, 151, 37, 0.35),
+    0 0 6px rgba(205, 131, 4, 0.2),
+    0 0 12px rgba(188, 131, 16, 0.08);
 }
 
 #hud {
@@ -148,13 +102,6 @@ a:hover {
     color: #1f89c2;
 }
 
-
-.flex-2 {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
-
 div.foreground {
     min-height: 100vh;
     width: 100%;
@@ -163,38 +110,16 @@ div.foreground {
     position: fixed;
 }
 
-.inner {
-	height: 50%;
-	width: 75%;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 0;
-	position: absolute;
-	padding-bottom: 0
-}
-
 .container {
 	/* position: fixed; */
     width: 100%;
-    max-width: 1100px;
+    max-width: 60vw;
+    min-height: 60vh;
     margin-left: 10vw;
     margin-right: auto;
-    transform: translateY(-10vh)
+    color: rgb(78, 55, 16); position: fixed; top:10vh; left: -5vw; transition: opacity 2s ease-in
     /* padding: 1rem 2rem; */
 }
-
-@keyframes intro {
-    from {
-        background-image: url('images/idle_blink_nh');
-        translate: 0 100vh;
-        scale: 100% 1;
-      }
-    
-      to {
-        translate: 0 0;
-        scale: 100% 1;
-      }
-    }
 
 @keyframes dropShadow {
     25%{
@@ -205,7 +130,6 @@ div.foreground {
         filter: drop-shadow(20px 10px 0px #eeb115)
       }
 }
-
 
 @keyframes breathe {
     0%, 100% { transform: translateY(5vh) scale(1); }
@@ -292,63 +216,6 @@ div.foreground {
     width: 5%;
 }
 
-.text-title {
-	margin-top: 25%;
-	font-size: 2rem;
-	text-align: left;
-	opacity: 1;
-	word-spacing: 1px;
-	color: var(--text, #fff)
-}
-
-.text-subtitle {
-    display: flow-root;
-    align-self: flex-start;
-    margin-bottom: 1.5rem;
-    max-width: 20%;
-    padding: 20px;
-    background-color: rgba(30, 30, 30, 0.56);
-    box-shadow: 12px 12px 1px rgb(41, 41, 41);
-    overflow-anchor: none;
-}
-
-.text-subtitle-small {
-    display: flow-root;
-    align-self: flex-start;
-    margin-bottom: 1.5rem;
-    max-width: 20%;
-    padding: 20px;
-    background-color: rgba(30, 30, 30, 0.56);
-    box-shadow: 10px 10px 1px rgb(41, 41, 41);
-    overflow-anchor: none;
-}
-
-.bios {
-    cursor: pointer;
-    display: block;
-}
-.bios:hover {
-    color: var(--hl1, #fff)
-}
-
-.bio {
-    display: grid;
-    grid-template-rows: 0fr;
-    opacity: 0;
-    transition:
-      grid-template-rows 0.4s ease,
-      opacity 0.25s ease;
-  }
-  
-  .bio > * {
-    overflow: hidden;
-  }
-  
-  .bio.open {
-    grid-template-rows: 1fr;
-    opacity: 1;
-  }
-
 .spacer {
     padding: 50px;
 }
@@ -362,8 +229,6 @@ div.foreground {
 @media only screen and (max-width: 768px) {
     body {
       background-color: #121212;
-      background-image: none !important; 
-      flex-direction: column;
     }
 
     .her {
@@ -383,24 +248,12 @@ div.foreground {
 
 @media screen and (min-width: 1921px) {
     body {
-        font-size: 2.3rem;
-    }
-    .text-title {
-        font-size: inherit;
-    }
-
-    .text-subtitle {
-        min-width: clamp(30vw, 40vw, 50vw);
-        bottom: 0;
-        margin-bottom: 0.5rem;
-        transition: max-width 0.4s ease, opacity 0.2s ease;
-    }
-    .text-subtitle-small {
-        min-width: 20vw;
+        font-size: clamp(1rem, 1.2rem, 3.3rem);
     }
 
     .container {
         transform: none;
+        color: rgb(78, 55, 16); position: fixed; top:20vh; left: -5vw; transition: opacity 2s ease-in
     }
 
     .bsu {
