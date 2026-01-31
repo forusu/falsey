@@ -29,15 +29,141 @@
   <meta charset="utf-8">
 </head>
 
+<script>
+  document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault(); // stop instant navigation
+      document.body.style.opacity = '0';
+      setTimeout(() => {
+        window.location = link.href;
+      }, 500); // match the fade duration
+    });
+  });
+
+  window.addEventListener("load", () => {
+    document.body.style.opacity = '1';
+  });
+</script>
+
 <style>
+  body {
+    background-color: rgb(11, 11, 11); 
+    transition: opacity 1.5s ease;
+  }
+
   body.loaded {
     opacity: 1;
   }
+
+  p {
+    color: #9e670e;
+
+    text-shadow:
+      0 0 2px rgba(196, 151, 37, 0.35),
+      0 0 6px rgba(205, 131, 4, 0.2),
+      0 0 12px rgba(188, 131, 16, 0.08);
+  }
+
+  .crt {
+  
+  mix-blend-mode: screen;
+
+  filter: brightness(1.95) contrast(1.05);
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  background:
+    /* Scanlines */
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.06) 0px,
+      rgba(255,255,255,0.06) 1px,
+      rgba(0,0,0,0) 2px,
+      rgba(0,0,0,0) 4px
+    ),
+    /* Noise layer */
+    repeating-linear-gradient(
+      to right,
+      rgba(255,255,255,0.015) 0px,
+      rgba(0,0,0,0.015) 1px,
+      rgba(255,255,255,0.015) 2px
+    );
+
+  animation:
+    crt-flicker 0.15s infinite,
+    crt-noise-move 0.6s infinite;
+}
+
+/* Flicker (brightness instability) */
+@keyframes crt-flicker {
+  0%   { opacity: 0.95;}
+  50%  { opacity: 1;}
+  100% { opacity: 0.96; }
+}
+
+/* Noise shimmer movement */
+@keyframes crt-noise-move {
+  0%   { background-position: 0 0, 0 0; }
+  100% { background-position: 0 4px, 6px 0.3; filter: brightness(150%) }
+}
+.crt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.05),
+      rgba(0,0,0,0.05),
+      rgba(255,255,255,0.05)
+    );
+  opacity: 0.05;
+  animation: crt-roll 6s linear infinite;
+}
+
+@keyframes crt-roll {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+
+.crt-screen {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+
+  transform:
+    perspective(1200px)
+    scale(1.03);
+
+  border-radius: 2.5%;
+  overflow: hidden;
+}
+
+.crt-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(90, 90, 90, 0.06) 0%,
+      rgba(0,0,0,0.25) 70%,
+      rgba(0,0,0,0.45) 100%
+    );
+
+  mix-blend-mode: multiply;
+}
+
 </style>
 
-<body class="theme" style="background-color: rgb(11, 11, 11); transition: opacity 1.5s ease;">
-
-  <!-- Background stuff -->
+<body>
+  <div class="crt-screen">
+  <div class="crt"></div>
 
   <div class="foreground">
 
@@ -62,93 +188,7 @@
             In order to achieve better communication and understanding of their environment, BSUs spend two years in specialised training intertwined with human activities and following the human growth process. This better prepares each BSU to deal with management and human relations as well as develops their personality.
           </p>
 
-          <img src="images/MEPLOGO1.png" style="width:20%; filter: grayscale(40%) brightness(25%) ">
-
-              <script>
-
-                document.addEventListener("DOMContentLoaded", () => {
-                  const textContainer = document.querySelector(".text-subtitle");
-                  const headers = document.querySelectorAll(".bios");
-                  const bios = document.querySelectorAll(".bio");
-                  
-                  headers.forEach(header => {
-                    header.addEventListener("click", () => {
-                      const bio = header.nextElementSibling;
-                      if (!bio || !bio.classList.contains("bio")) return;
-                
-                      const isOpening = !bio.classList.contains("open");
-                
-                      // Close all
-                      bios.forEach(b => b.classList.remove("open"));
-                
-                      // Open clicked (if it was closed)
-                      if (isOpening) bio.classList.add("open");
-                
-                      // Container resize logic
-                      if (!isOpening) {
-                      setTimeout(() => {
-                        textContainer.style.maxWidth = "20%";
-                        textContainer.style.transition = "0.1s ease-in";
-                      }, 200);
-                      } else {
-                        textContainer.style.maxWidth = "60%";
-                        textContainer.style.transition = "0.1s ease-in";
-                      }
-                    });
-                  });
-                });
-
-                document.addEventListener("DOMContentLoaded", () => {
-                const idle = document.querySelector(".her.idle");
-                const blink = document.querySelector(".her.blink");
-                const speakblink = document.querySelector(".her.speakblink");
-                const heranim = document.querySelector(".heranim");
-
-                if (!idle || !blink || !heranim) return;
-
-                function blinkOnce() {
-                  // Don't blink while speaking
-
-                  idle.style.opacity = "0";
-                  if (heranim.matches(":hover")) {
-                    speakblink.style.opacity ="1"
-                  }
-                  blink.style.opacity = "1";
-
-                  setTimeout(() => {
-
-                    if (heranim.matches(":hover")) {
-                      idle.style.opacity = "1";
-                      blink.style.opacity ="0";
-                      speakblink.style.opacity ="0"
-                    } else {
-
-                    speakblink.style.opacity ="0";
-                    blink.style.opacity = "0";
-                    idle.style.opacity = "1";
-                  
-                  }
-
-                  }, 120); // blink duration
-                }
-
-                function scheduleBlink() {
-                  const delay = Math.random() * 4000 + 2500; // 2.5–6.5s
-                  setTimeout(() => {
-                    blinkOnce();
-                    scheduleBlink();
-                  }, delay);
-                }
-
-                scheduleBlink();
-              });
-
-              window.addEventListener("DOMContentLoaded", () => {
-                document.body.classList.add("loaded");
-              });
-
-
-                </script>
+          <img src="images/MEPLOGO1.png" style="width:20%; filter: grayscale(00%) brightness(45%) ">
         
 
 
@@ -160,12 +200,13 @@
 
   </div>
 
+
   <div class="heranim" style="right:5vw; ">
-    <img class="her blink" src="images/idle_blink_nh.webp" style="opacity: 1; filter: grayscale(100%) brightness(15%); animation-fill-mode: none; animation: none;">
-    <p class="bsu" style="min-width:5vw; color: pointer"><a class="scary" href="index.html">AWAIT</a></p>
+    <img class="her blink" src="images/idle_blink_nh.webp" style="opacity: 1; filter: grayscale(100%) brightness(15%) contrast(100%); animation-fill-mode: none; animation: none;">
+    <p class="bsu" style="min-width:5vw; color: pointer; background-color: black;"><a class="scary" href="index.html">AWAIT</a></p>
   </div>
   
-
+  </div>
 </body>
 
 

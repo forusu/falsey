@@ -29,8 +29,107 @@
   <meta charset="utf-8">
 </head>
 
-<body class="theme">
+<style>
+  /* This was vibe coded because I can't even begin figuring out how to make a CRT effect, will be changed another time maybe */
+  .crt {
+  
+  mix-blend-mode: screen;
 
+  filter: brightness(1.95) contrast(0.05);
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  background:
+    /* Scanlines */
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.06) 0px,
+      rgba(255,255,255,0.06) 1px,
+      rgba(0,0,0,0) 2px,
+      rgba(0,0,0,0) 4px
+    ),
+    /* Noise */
+    repeating-linear-gradient(
+      to right,
+      rgba(255,255,255,0.015) 0px,
+      rgba(0,0,0,0.015) 1px,
+      rgba(255,255,255,0.015) 2px
+    );
+
+  animation:
+    crt-flicker 0.15s infinite,
+    crt-noise-move 0.6s infinite;
+}
+
+@keyframes crt-flicker {
+  0%   { opacity: 0.95;}
+  50%  { opacity: 1;}
+  100% { opacity: 0.96; }
+}
+
+@keyframes crt-noise-move {
+  0%   { background-position: 0 0, 0 0; }
+  100% { background-position: 0 4px, 6px 0.3; }
+}
+.crt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.05),
+      rgba(0,0,0,0.05),
+      rgba(255,255,255,0.05)
+    );
+  opacity: 0.05;
+  animation: crt-roll 6s linear infinite;
+}
+
+@keyframes crt-roll {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+
+.crt-screen {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+
+  transform:
+    perspective(1200px)
+    scale(1.03);
+
+  border-radius: 2.5%;
+  overflow: hidden;
+}
+
+.crt-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(90, 90, 90, 0.06) 0%,
+      rgba(0,0,0,0.25) 70%,
+      rgba(0,0,0,0.45) 100%
+    );
+
+  mix-blend-mode: multiply;
+}
+</style>
+
+
+<body class="theme">
+  <div class="crt"></div>
+  <div class="crt-screen">
+    
   <!-- Background stuff -->
   <div class="bg-stack">
     <div class="bg base"></div>
@@ -108,10 +207,8 @@
                 
                       const isOpening = !bio.classList.contains("open");
                 
-                      // Close all
                       bios.forEach(b => b.classList.remove("open"));
                 
-                      // Open clicked (if it was closed)
                       if (isOpening) bio.classList.add("open");
                 
                       // Container resize logic
@@ -137,7 +234,6 @@
                 if (!idle || !blink || !heranim) return;
 
                 function blinkOnce() {
-                  // Don't blink while speaking
 
                   idle.style.opacity = "0";
                   if (heranim.matches(":hover")) {
@@ -159,7 +255,7 @@
                   
                   }
 
-                  }, 120); // blink duration
+                  }, 120);
                 }
 
                 function scheduleBlink() {
@@ -193,8 +289,7 @@
     <img class="her speakblink" src="images/speak_blink.webp">
     <p class="bsu"><a class="scary" href="bsu0013.html">BSU 0013</a></p>
   </div>
-  
-
+</div>
 </body>
 
 
