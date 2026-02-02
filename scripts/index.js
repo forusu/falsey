@@ -4,31 +4,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const textContainer = document.querySelector(".text-subtitle");
     const headers = document.querySelectorAll(".bios");
     const bios = document.querySelectorAll(".bio");
-
+    const scroller = document.querySelector(".foreground");
+  
     headers.forEach(header => {
-        header.addEventListener("click", () => {
-            const bio = header.nextElementSibling;
-            if (!bio || !bio.classList.contains("bio")) return;
-
-            const isOpening = !bio.classList.contains("open");
-
-            bios.forEach(b => b.classList.remove("open"));
-
-            if (isOpening) bio.classList.add("open");
-
-            // Container resize logic
-            if (!isOpening) {
-                setTimeout(() => {
-                    textContainer.style.maxWidth = "20%";
-                    textContainer.style.transition = "0.1s ease-in";
-                }, 200);
-            } else {
-                textContainer.style.maxWidth = "60%";
-                textContainer.style.transition = "0.1s ease-in";
-            }
-        });
+      header.addEventListener("click", () => {
+        const bio = header.nextElementSibling;
+        if (!bio || !bio.classList.contains("bio")) return;
+  
+        const isOpening = !bio.classList.contains("open");
+  
+        // close all bios
+        bios.forEach(b => b.classList.remove("open"));
+  
+        // open clicked bio
+        if (isOpening) bio.classList.add("open");
+  
+        // resize container
+        if (!isOpening) {
+          setTimeout(() => {
+            textContainer.style.maxWidth = "15vw";
+            textContainer.style.transition = "0.1s ease-in";
+          }, 200);
+        } else {
+          textContainer.style.maxWidth = "45vw";
+          textContainer.style.transition = "0.1s ease-in";
+        }
+      });
     });
-});
+  });
 
 // Blinky blinky
 document.addEventListener("DOMContentLoaded", () => {
@@ -76,5 +79,3 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Timed backgrounds
-
-

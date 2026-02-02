@@ -69,9 +69,9 @@
     <div class="bg blue2"></div>
     <div class="bg blue3"></div>
   </div>
-
+  <div class="blur-layer"></div>
   <div class="foreground">
-  <p id="clock"></p>
+  
     <section class="flex-2">       
 
       <div class="container">
@@ -80,12 +80,12 @@
 
         <p><span class="text-subtitle-small">
           
-            My name is <span class="hl">Melissa</span>. <br>
+            My name is <span class="hl">Melissa</span>. <p id="clock"></p> <br>
 
         </p></span>
         <div class="text-subtitle">
           
-            <span class="bios" onclick="bioExpand">> Who am I? </span>
+            <span class="bios" onclick="bioExpand(this)">> Who am I? </span>
               <span class="bio">
                 <section>
                 <br>
@@ -96,7 +96,7 @@
                 </section>
               </span>
 
-            <span class="bios" onclick="bioExpand">> Languages</span>
+            <span class="bios" onclick="bioExpand(this)">> Languages</span>
               <span class="bio">
                 <section>
                 <br>
@@ -107,17 +107,20 @@
                 </section>
               </span>
 
-            <span class="bios" onclick="bioExpand">> Skills</span>
+            <span class="bios" onclick="bioExpand(this)">> Skills</span>
               <span class="bio">
                 <section>
                 <br>
-                  Work in progress
+                  <span class="hl">My major skills are:</span> <br>OSINT, <div class="tooltip">Art<span class="tooltiptext">(Photography, Pixel art, Digital drawing, Visual design)</span></div>,
+                  <div class="tooltip">Programming<span class="tooltiptext">(C, C++, Python, JS, HTML+CSS)</span></div></span>, Social Engineering, Networking, Languages, Translation, Writing, Crisis Management, Video editing, Geography, Memorisation, Teambuilding, <div class="tooltip">Typing <div class="tooltiptext">150wpm 15s</div></div><br><br>
+                  
+                  <span class="hl">My minor skills are:</span> <br><span class="hl">Music</span> (Trumpet, Piano, Harmonica)<span class="hl">, Trades</span> (Electrical, Construction, Automechanics)<span class="hl">, Meteorology, System administration, IT</span>
                   <br>
                   <br>
                 </section>
               </span>
 
-            <span class="bios" onclick="bioExpand">> Projects</span>
+            <span class="bios" onclick="bioExpand(this)">> Projects</span>
               <span class="bio">
                 <section>
                 <br>
