@@ -1,1 +1,1 @@
-[banner](assets/banner.webp)
+[banner](images/banner.webp)
