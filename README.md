@@ -1,1 +1,1 @@
-[banner](images/banner.webp)
+![banner](images/banner.webp)
