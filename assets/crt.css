@@ -142,10 +142,6 @@
     text-shadow: 0 0 5px;
     -webkit-font-smoothing: auto;
   }
-
-.her {
-    filter: blur(1px)
-}
   
   .crt-screen {
     position: relative;

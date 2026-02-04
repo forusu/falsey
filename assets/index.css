@@ -220,6 +220,7 @@ div.foreground {
 @keyframes intro {
     from {
         background-image: url('../images/idle_blink_nh');
+        filter: brightness(30%);
         translate: 0 100vh;
         scale: 100% 1;
         pointer-events: none;
@@ -316,6 +317,7 @@ div.foreground {
 
 .bsu {
     filter:none;
+    pointer-events: auto;
     transition: 0.2s ease-in;
     background-color: #0f0f0f;
     color: #fff;
@@ -356,7 +358,7 @@ div.foreground {
     /* animation-name: gradientChange;
     animation-duration: 5s; */
     color: var(--hl);
-    animation-iteration-count: infinite;
+    /* animation-iteration-count: infinite; */
 	margin-top: 25%;
 	font-size: 2rem;
 	text-align: left;
@@ -364,20 +366,6 @@ div.foreground {
 	word-spacing: 1px;
     filter: drop-shadow(5px 5px 0px #2e2e2e);
     pointer-events: auto;
-}
-
-@keyframes caret {
-    0%, 100% {
-        content: "■";
-    }
-    25%, 50% {
-        content: ""
-    }
-}
-
-.text-tile:hover::after {
-    animation: caret;
-    animation-duration: infinite;
 }
 
 .text-subtitle {
