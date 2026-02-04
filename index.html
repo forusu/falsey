@@ -38,7 +38,7 @@
     h = checkTime(hours);
     m = checkTime(minutes);
 
-    const shortTimeZone = new Intl.DateTimeFormat(undefined, { timeZoneName: 'short' })
+    const shortTimeZone = new Intl.DateTimeFormat('en-US', { timeZoneName: 'short' })
     .formatToParts(now)
     .find(part => part.type === 'timeZoneName')
     .value;

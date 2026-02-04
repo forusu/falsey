@@ -219,8 +219,7 @@ div.foreground {
 
 @keyframes intro {
     from {
-        background-image: url('../images/idle_blink_nh');
-        filter: brightness(30%);
+        filter: brightness(30%); filter: blur(10px);
         translate: 0 100vh;
         scale: 100% 1;
         pointer-events: none;
