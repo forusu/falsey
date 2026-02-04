@@ -75,10 +75,10 @@ body.loaded {
 p {
   color: #9e670e;
 
-  text-shadow:
+  /* text-shadow:
     0 0 2px rgba(196, 151, 37, 0.35),
     0 0 6px rgba(205, 131, 4, 0.2),
-    0 0 12px rgba(188, 131, 16, 0.08);
+    0 0 12px rgba(188, 131, 16, 0.08); */
 }
 
 #hud {

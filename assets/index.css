@@ -222,6 +222,7 @@ div.foreground {
         background-image: url('../images/idle_blink_nh');
         translate: 0 100vh;
         scale: 100% 1;
+        pointer-events: none;
       }
     
       to {
@@ -232,50 +233,38 @@ div.foreground {
 
 @keyframes dropShadow {
     25%{
+        pointer-events: none;
         background-image: url('../images/idle_nh');
         filter: none;
       }
       100% {
-        filter: drop-shadow(20px 10px 0px #eeb115)
+        filter: drop-shadow(20px 10px 0px #eeb115);
+        pointer-events: auto;
       }
 }
 
 
-@keyframes breathe {
-    0%, 100% { transform: translateY(5vh) scale(1); }
-    50% { transform: translateY(5.8vh) scale(1); }
-}
+/* @keyframes breathe {
+    0%, 100% { transform: translateY(5vh) scale(1); filter: drop-shadow(20px 10px 0px #eeb115);}
+    50% { transform: translateY(5.8vh) scale(1); filter: drop-shadow(18px 15px 0px #eeb115);}
+} */
 
-.bsu {
-    transition: 0.2s ease-in;
-    background-color: #0f0f0f;
-    color: #fff;
-    opacity: 0;
-    font-size: 1rem;
-    position: fixed;
-    max-width: auto;
-    right: 30vw;
-    top: 35vh;
-    padding: 1px;
-    padding-left: 20px;
-    padding-right: 20px;
-    height: auto;
-    text-align:center;
-    z-index: 9999;
+@keyframes breathe {
+    0%, 100% { transform: translateY(5vh) scale(1);}
+    50% { transform: translateY(5.8vh) scale(1);}
 }
 
 .heranim {
     animation: breathe 4s ease-in-out infinite;
+    /* animation-delay: 6s; */
     image-rendering: crisp-edges;
     position: fixed;
     bottom: 0;
     right: 14vw;
     width: clamp(18vw, 38vw, 38vw);
     z-index: 10;
-    pointer-events: none;
     transform: translateY(5vh);
-    pointer-events: auto;
-
+    pointer-events: none;
     display: grid;
 }
 
@@ -310,6 +299,7 @@ div.foreground {
     transition: 0.2s ease-in;
 }
 .heranim:hover .bsu {
+    filter: none !important;
     opacity: 1;
     transition: 0.2s ease-in;
 }
@@ -322,6 +312,25 @@ div.foreground {
     animation-fill-mode: forwards;
     animation-delay: 0s, 2s;
     /* filter: drop-shadow(30px 10px 0px #fabd2e); */
+}
+
+.bsu {
+    filter:none;
+    transition: 0.2s ease-in;
+    background-color: #0f0f0f;
+    color: #fff;
+    opacity: 0;
+    font-size: 1rem;
+    position: fixed;
+    max-width: auto;
+    right: 30vw;
+    top: 35vh;
+    padding: 1px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: auto;
+    text-align:center;
+    z-index: 9999;
 }
 
 #logo {
@@ -354,6 +363,21 @@ div.foreground {
 	opacity: 1;
 	word-spacing: 1px;
     filter: drop-shadow(5px 5px 0px #2e2e2e);
+    pointer-events: auto;
+}
+
+@keyframes caret {
+    0%, 100% {
+        content: "■";
+    }
+    25%, 50% {
+        content: ""
+    }
+}
+
+.text-tile:hover::after {
+    animation: caret;
+    animation-duration: infinite;
 }
 
 .text-subtitle {
@@ -385,6 +409,11 @@ div.foreground {
     cursor: pointer;
     display: block;
 }
+
+.bios::before {
+    content: ">";
+}
+
 .bios:hover {
     color: var(--hlb)
 }

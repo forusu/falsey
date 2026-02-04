@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const textContainer = document.querySelector(".text-subtitle");
     const headers = document.querySelectorAll(".bios");
     const bios = document.querySelectorAll(".bio");
-    const scroller = document.querySelector(".foreground");
   
     headers.forEach(header => {
       header.addEventListener("click", () => {
