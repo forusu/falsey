@@ -516,6 +516,10 @@ div.foreground {
       font-size: 2rem;
     }
 
+    .breaking {
+        font-size: 2.5rem;
+    }
+
     .text-subtitle {
         min-width: clamp(5vw, 15vw, 50vw);
         bottom: 0;
