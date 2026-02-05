@@ -54,6 +54,13 @@ body {
 
 }
 
+.channel {
+    position: absolute;
+    width: 10vw;
+    top: 5dvh;
+    filter: drop-shadow(0 0 2px)
+}
+
 #clock {
     display: inline-block;
     background-color: black;
@@ -217,7 +224,7 @@ div.foreground {
 
 
 
-@keyframes intro {
+  @keyframes intro {
     from {
         filter: brightness(30%); filter: blur(10px); filter: drop-shadow(0 0 0);
         translate: 0 100vh;
@@ -280,6 +287,7 @@ div.foreground {
   }
 
 .her.idle {
+    transition: 0.3s ease-out;
     opacity: 1;
 }
 
@@ -295,17 +303,17 @@ div.foreground {
 .heranim:hover .her.blink,
 .heranim:hover .her.speakblink {
     opacity: 0;
-    transition: 0.2s ease-in;
+    transition: 0.3s ease-out;
 }
 
 .heranim:hover .her.speak {
     opacity: 1;
-    transition: 0.2s ease-in;
+    transition: 0.2s ease-in-out;
 }
 .heranim:hover .bsu {
     filter: none !important;
     opacity: 1;
-    transition: 0.2s ease-in;
+    transition: 0.2s ease-out;
 }
 
 .her {
@@ -336,6 +344,35 @@ div.foreground {
     height: auto;
     text-align:center;
     z-index: 9999;
+}
+
+.breaking {
+    font-size: 1.3rem;
+    z-index: 10000;
+    position: fixed;
+    color: var(--white);
+    background-color: #0f0f0f;
+    bottom: 0;
+}
+
+#news::before {
+    content: "> BREAKING NEWS: ";
+    color: var(--hl)
+}
+
+#news::after {
+    content: " // ";
+    color: var(--hl)
+}
+
+#weather::before {
+    content: "WEATHER REPORT: ";
+    color: var(--hlb)
+}
+
+#weather::after {
+    content: " // THANK YOU FOR YOUR PATRONAGE, FSQ BROADCASTING SERVICE.";
+    color: var(--hl)
 }
 
 #logo {
