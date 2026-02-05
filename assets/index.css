@@ -287,7 +287,6 @@ div.foreground {
   }
 
 .her.idle {
-    transition: 0.3s ease-out;
     opacity: 1;
 }
 
