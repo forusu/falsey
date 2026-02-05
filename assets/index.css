@@ -219,7 +219,7 @@ div.foreground {
 
 @keyframes intro {
     from {
-        filter: brightness(30%); filter: blur(10px);
+        filter: brightness(30%); filter: blur(10px); filter: drop-shadow(0 0 0);
         translate: 0 100vh;
         scale: 100% 1;
         pointer-events: none;
@@ -233,21 +233,24 @@ div.foreground {
 
 @keyframes dropShadow {
     25%{
+        filter: drop-shadow(30px 10px 0px #eeb115);
         pointer-events: none;
         background-image: url('../images/idle_nh');
-        filter: none;
+      }
+      99% {
+        filter: drop-shadow(30px 10px 0px #eeb115);
       }
       100% {
-        filter: drop-shadow(20px 10px 0px #eeb115);
+        filter: none;
         pointer-events: auto;
       }
 }
 
 
-/* @keyframes breathe {
-    0%, 100% { transform: translateY(5vh) scale(1); filter: drop-shadow(20px 10px 0px #eeb115);}
-    50% { transform: translateY(5.8vh) scale(1); filter: drop-shadow(18px 15px 0px #eeb115);}
-} */
+@keyframes breatheShadow {
+    0%, 100% { filter: drop-shadow(30px 10px 0px #eeb115);}
+    50% { filter: drop-shadow(28px 18px 0px #eeb115);}
+}
 
 @keyframes breathe {
     0%, 100% { transform: translateY(5vh) scale(1);}
@@ -255,7 +258,7 @@ div.foreground {
 }
 
 .heranim {
-    animation: breathe 4s ease-in-out infinite;
+    animation: breathe 3s ease-in-out infinite;
     /* animation-delay: 6s; */
     image-rendering: crisp-edges;
     position: fixed;
@@ -269,6 +272,7 @@ div.foreground {
 }
 
 .heranim img {
+    
     grid-area: 1 / 1;
     width: 100%;
     height: auto;
@@ -306,11 +310,11 @@ div.foreground {
 
 .her {
     transform: rotate(8deg);
-    animation-name: intro, dropShadow;
-    animation-duration: 2s, 4s;
-    animation-iteration-count: 1, 1;
+    animation-name: intro, dropShadow, breatheShadow;
+    animation-duration: 2s, 4s, 3.5s;
+    animation-iteration-count: 1, 1, infinite;
     animation-fill-mode: forwards;
-    animation-delay: 0s, 2s;
+    animation-delay: 0s, 2s, 4s;
     /* filter: drop-shadow(30px 10px 0px #fabd2e); */
 }
 
