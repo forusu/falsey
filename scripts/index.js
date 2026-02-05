@@ -77,6 +77,8 @@ document.addEventListener("DOMContentLoaded", () => {
     scheduleBlink();
 });
 
+// Marquee replacement
+
 // Breaking news:
 async function loadBreakingNews() {
   try {
