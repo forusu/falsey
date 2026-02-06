@@ -4,9 +4,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const textContainer = document.querySelector(".text-subtitle");
     const headers = document.querySelectorAll(".bios");
     const bios = document.querySelectorAll(".bio");
-  
+    var closedW = "15vw";
+    var openW = "45vw";
+
     headers.forEach(header => {
       header.addEventListener("click", () => {
+        header.classList.remove("hopen")
+
+        var isMobileViewport = window.matchMedia("only screen and (max-width: 767px)").matches;
+        var isBigScreen = window.matchMedia("only screen and (min-width: 1921px)").matches;
+        
+        if (isMobileViewport) {
+          closedW = "200vw";
+          openW = "200vw";
+        } // if (isBigScreen) { 
+         // closedW = "15vw";
+         // openW = "45vw"; {
+        else {
+          closedW = "15vw";
+          openW = "45vw";
+        };
+
+
+
         const bio = header.nextElementSibling;
         if (!bio || !bio.classList.contains("bio")) return;
   
@@ -14,18 +34,19 @@ document.addEventListener("DOMContentLoaded", () => {
   
         // close all bios
         bios.forEach(b => b.classList.remove("open"));
-  
+        headers.forEach(h => h.classList.remove("hopen"));
+        
         // open clicked bio
-        if (isOpening) bio.classList.add("open");
+        if (isOpening) { bio.classList.add("open"); header.classList.add("hopen")}
   
         // resize container
         if (!isOpening) {
           setTimeout(() => {
-            textContainer.style.maxWidth = "15vw";
+            textContainer.style.maxWidth = closedW;
             textContainer.style.transition = "0.1s ease-in";
           }, 200);
         } else {
-          textContainer.style.maxWidth = "45vw";
+          textContainer.style.maxWidth = openW;
           textContainer.style.transition = "0.1s ease-in";
         }
       });
@@ -77,7 +98,23 @@ document.addEventListener("DOMContentLoaded", () => {
     scheduleBlink();
 });
 
-// Marquee replacement
+// get TOD
+function getTimeOfDay() {
+  const currentHour = new Date().getHours();
+  let timeOfDay;
+
+  if (currentHour >= 5 && currentHour < 12) {
+    timeOfDay = "GOOD MORNING, ";
+  } else if (currentHour >= 12 && currentHour < 17) {
+    timeOfDay = "GOOD AFTERNOON, ";
+  } else if (currentHour >= 17 && currentHour < 21) {
+    timeOfDay = "GOOD EVENING,";
+  } else {
+    timeOfDay = "GOOD NIGHT, ";
+  }
+
+  return timeOfDay;
+}
 
 // Breaking news:
 async function loadBreakingNews() {
@@ -85,11 +122,14 @@ async function loadBreakingNews() {
     const res = await fetch('../data/news.txt', { cache: 'no-store' });
     const text = await res.text();
     const empty = "THERE ARE NO BREAKING NEWS AT THIS TIME"
+    // var timeOD = 
+    
+
 
     if (!text) {
       document.getElementById('news').innerHTML = empty.trim();
     } else {
-      document.getElementById('news').innerHTML = text.trim().toUpperCase();
+      document.getElementById('news').innerHTML = getTimeOfDay() + "OUR BELOVED VIEWERS. " + text.trim().toUpperCase();
     }
     
   } catch (err) {

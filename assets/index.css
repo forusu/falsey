@@ -7,6 +7,22 @@
 	--lgray: #1f1f1f
 }
 
+/* @keyframes boot {
+    0% {
+        opacity: 0.6;
+    }
+    5% {
+        opacity: 1;
+    }
+}
+
+.foreground {
+    animation: boot;
+    animation-duration: 0.1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+} */
+
 * {
 	margin: 0;
 	padding: 0;
@@ -17,7 +33,7 @@
 
 @font-face {
 	font-family: 'VCR'; 
-	src: url('VCR.ttf') format('truetype');
+	src: url('../assets/VCR.ttf') format('truetype');
   }
 
 body {
@@ -57,6 +73,7 @@ body {
 .channel {
     position: absolute;
     width: 10vw;
+    left: 10vw;
     top: 5dvh;
     filter: drop-shadow(0 0 2px)
 }
@@ -180,11 +197,14 @@ div.foreground {
 .container {
 	/* position: fixed; */
     width: 100%;
+    height: 20%;
     max-width: 1100px;
     margin-left: 10vw;
     margin-right: auto;
     transform: none;
-    margin-top: clamp(-5vh, -15vh, -20vh);
+    margin-top: clamp(-15vh, -15vh, -20vh);
+    /* margin-top: -10vh; */
+    /* margin-bottom: 10vh; */
     /* padding: 1rem 2rem; */
 }
 
@@ -242,7 +262,6 @@ div.foreground {
     25%{
         filter: drop-shadow(30px 10px 0px #eeb115);
         pointer-events: none;
-        background-image: url('../images/idle_nh');
       }
       99% {
         filter: drop-shadow(30px 10px 0px #eeb115);
@@ -276,10 +295,10 @@ div.foreground {
     transform: translateY(5vh);
     pointer-events: none;
     display: grid;
+    transition: 0.3s ease-in-out;
 }
 
 .heranim img {
-    
     grid-area: 1 / 1;
     width: 100%;
     height: auto;
@@ -302,17 +321,15 @@ div.foreground {
 .heranim:hover .her.blink,
 .heranim:hover .her.speakblink {
     opacity: 0;
-    transition: 0.3s ease-out;
 }
 
 .heranim:hover .her.speak {
     opacity: 1;
-    transition: 0.2s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 .heranim:hover .bsu {
     filter: none !important;
     opacity: 1;
-    transition: 0.2s ease-out;
 }
 
 .her {
@@ -355,10 +372,12 @@ div.foreground {
   }
 
 .breaking {
-    position: fixed; /* or absolute if you prefer */
+    position: fixed; 
     bottom: 0;
+    margin-bottom: 0;
+    padding: 2px;
     width: 100%;
-    overflow: hidden; /* hide overflow */
+    overflow: hidden; 
     background-color: #0f0f0f;
     color: var(--white);
     font-size: 1.3rem;
@@ -372,8 +391,8 @@ div.foreground {
 
 .breaking-content {
     display: inline-block;
-    padding-left: 100%; /* start offscreen right */
-    animation: scroll-left 45s linear infinite; /* adjust speed */
+    padding-left: 100%;
+    animation: scroll-left 55s linear infinite;
 }
 
 @keyframes scroll-left {
@@ -405,27 +424,66 @@ div.foreground {
 #logo {
     width: 5%;
 }
-/* 
-@keyframes gradientChange {
-    25%{
-        color: #fff
-      }
+
+@keyframes typing {
+    0% {
+        content: "F"
+    }
+    5% {
+        content: "FA"
+    }
+    10% {
+        content: "FAL"
+    }
+    15% {
+        content: "FALS"
+    }
+    20% {
+        content: "FALSE"
+    }
+    25% {
+        content: "FALSEQ"
+    }
+    30% {
+        content: "FALSEQU"
+    }
+    35% {
+        content: "FALSEQUA"
+    }
+    40% {
+        content: "FALSEQUAL"
+    }
+    45% {
+        content: "FALSEQUALI"
+    }
     50% {
-        color: var(--hl)
+        content: "FALSEQUALIF"
     }
-    75% {
-        color: var(--hlb)
-      }
+    55% {
+        content: "FALSEQUALIFI"
+    }
+    60% {
+        content: "FALSEQUALIFIE"
+    }
+    65% {
+        content: "FALSEQUALIFIED"
+    }
     100% {
-        color: #fff
+        content: "FALSEQUALIFIED" 
     }
-} */
+}
+
+@keyframes caret {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
 
 .text-title {
-    /* animation-name: gradientChange;
-    animation-duration: 5s; */
     color: var(--hl);
-    /* animation-iteration-count: infinite; */
 	margin-top: 25%;
 	font-size: 2rem;
 	text-align: left;
@@ -433,6 +491,19 @@ div.foreground {
 	word-spacing: 1px;
     filter: drop-shadow(5px 5px 0px #2e2e2e);
     pointer-events: auto;
+}
+
+.typing::after {
+    content: "";
+    animation-name: typing;
+    animation-fill-mode: forwards;
+    animation-duration: 3s;
+    animation-iteration-count: 1;
+}
+
+.text-title::after {
+    animation: caret 0.5s infinite;
+    content: "_"
 }
 
 .text-subtitle {
@@ -478,18 +549,23 @@ div.foreground {
     grid-template-rows: 0fr;
     opacity: 0;
     transition:
-      grid-template-rows 0.4s ease,
-      opacity 0.25s ease;
-  }
-  
-  .bio > * {
+        grid-template-rows 0.4s ease,
+        opacity 0.25s ease;
+}
+
+.bio > * {
     overflow: hidden;
-  }
-  
-  .bio.open {
+}
+
+.bio.open {
     grid-template-rows: 1fr;
     opacity: 1;
-  }
+}
+
+.bios.hopen::before {
+    color: var(--hlb);
+    content: "-> "
+}
 
 .spacer {
     padding: 50px;
@@ -498,7 +574,12 @@ div.foreground {
 .hl {
 	color: var(--hl);
 	font-weight: normal;
+    pointer-events: auto;
 }
+
+/* .hl.lissa:hover {
+    content: "/Lissa"
+} */
 
 .hlb {
 	color: var(--hlb);
@@ -506,31 +587,109 @@ div.foreground {
 }
 
 
-@media only screen and (max-width: 768px) {
+/* Mobile */
+@media only screen and (max-width: 767px) {
+
+    .channel {
+        display: none;
+    }
+
+    .bios {
+        text-align: center;
+    }
+    
+    .bios::after {
+        content: " <"
+    }
+
+    .bios.hopen {
+        color: var(--hlb)
+    }
+
     body {
       background-color: #121212;
-      background-image: none !important; 
-      flex-direction: column;
+      /* flex-direction: column; */
       overflow-x: hidden;
+    }
+
+    .bg {
+        position: absolute;
+        inset: 0;
+      
+        background-size: cover;
+        background-position: 50% 45%;
+        background-repeat: no-repeat;
+    }
+
+    #clock {
+        position: absolute;
+        left: 30vw;
+        top: 60vw;
+        margin-bottom: 0;
+        font-size: 1.3rem;
     }
 
     .her {
         display: none;
     }
 
-    .text-subtitle .text-title {
-        min-width: 100%;
+    .text-subtitle .text-title .text-subtitle-small {
+        min-width: 100vw;
         text-align: center;
         position: absolute;
-        /* max-width: none !important; */
+        
     }
 
     .container {
+        margin-left: 0;
         position: absolute;
         min-width: 100%;
     }
-  }
 
+    .text-title {
+        /* animation-name: gradientChange;
+        animation-duration: 5s; */
+        color: var(--hl);
+        /* animation-iteration-count: infinite; */
+        margin-top: 25%;
+        margin-left: 0;
+        font-size: 2rem;
+        text-align: center;
+        opacity: 1;
+        word-spacing: 1px;
+        filter: drop-shadow(5px 5px 0px #2e2e2e);
+        pointer-events: auto;
+    }
+    
+    .text-subtitle {
+        margin-left: 0;
+        display: inline-block;
+        margin-top: 1.5rem;
+        margin-bottom: 3rem;
+        color: var(--white);
+        max-width: 100%;
+        padding: 20px;
+        background-color: rgba(30, 30, 30, 0.56);
+        box-shadow: 12px 12px 1px rgb(41, 41, 41);
+        /* overflow-anchor: none; */
+    }
+    
+    .text-subtitle-small {
+        margin-left: 0;
+        display: inline-block;
+        align-self: normal;
+        /* white-space: break-spaces; */
+        text-align: left;
+        margin-bottom: 1.5rem;
+        max-width: 100%;
+        padding: 20px;
+        background-color: rgba(30, 30, 30, 0.56);
+        box-shadow: 10px 10px 1px rgb(41, 41, 41);
+        /* overflow-anchor: none; */
+    }
+}
+
+/* 1920x1080 and up */
 @media screen and (min-width: 1921px) {
     body {
         font-size: clamp(1.2rem, 1.3rem, 2.3rem);
@@ -551,7 +710,7 @@ div.foreground {
         min-width: clamp(5vw, 15vw, 50vw);
         bottom: 0;
         font-size: 1.3rem;
-        margin-bottom: 0.5rem;
+        margin-bottom: 5.5rem;
         transition: max-width 0.4s ease, opacity 0.2s ease;
     }
     .text-subtitle-small {
@@ -603,7 +762,7 @@ div.foreground {
         transform: translateY(5vh);
     }
 }
-
+/* I don't even know I guess */
 @media screen and (min-width: 2560px) {
     body {
         font-size: clamp(1.5rem, 1.8rem, 2.3rem);
