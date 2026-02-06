@@ -1,3 +1,8 @@
+let timeState = getTimeOfDay();
+
+function updateTimeState() {
+  timeState = getTimeOfDay();
+}
 
 // Bio stuff handling
 document.addEventListener("DOMContentLoaded", () => {
@@ -53,25 +58,64 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+// get TOD
+var timeToSleep = 10000;
+var timeToWakeUp = 250;
+
+
+function getTimeOfDay() {
+  const currentHour = new Date().getHours();
+
+  if (currentHour >= 5 && currentHour < 12) {
+    return {
+      timeOfDay: "GOOD MORNING, ",
+      timeToSleep: 12000,
+      timeToWakeUp: 250
+    };
+  } else if (currentHour >= 12 && currentHour < 17) {
+    return {
+      timeOfDay: "GOOD AFTERNOON, ",
+      timeToSleep: 15000,
+      timeToWakeUp: 120
+    };
+  } else if (currentHour >= 17 && currentHour < 21) {
+    return {
+      timeOfDay: "GOOD EVENING, ",
+      timeToSleep: 10000,
+      timeToWakeUp: 180
+    };
+  } else {
+    return {
+      timeOfDay: "GOOD NIGHT, ",
+      timeToSleep: 8000,
+      timeToWakeUp: 350
+    };
+  }
+}
+
+
+
 // Blinky blinky
 document.addEventListener("DOMContentLoaded", () => {
     const idle = document.querySelector(".her.idle");
     const blink = document.querySelector(".her.blink");
     const speakblink = document.querySelector(".her.speakblink");
     const heranim = document.querySelector(".heranim");
+    const speaky = document.querySelector(".speaky");
+    var isSleeping = false;
 
+    idle.style.opacity = "0";
     if (!idle || !blink || !heranim) return;
 
     function blinkOnce() {
-
         idle.style.opacity = "0";
         if (heranim.matches(":hover")) {
             speakblink.style.opacity = "1"
         }
         blink.style.opacity = "1";
-
+        // Speech bubble stuff
         setTimeout(() => {
-
+            
             if (heranim.matches(":hover")) {
                 idle.style.opacity = "1";
                 blink.style.opacity = "0";
@@ -85,36 +129,117 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
         }, 120);
+
     }
+
+    let blinkTimer = null;
+    const DOZE_DELAY = 7500;
+    let dozeTimer = null;
 
     function scheduleBlink() {
-        const delay = Math.random() * 4000 + 2500; // 2.5–6.5s
-        setTimeout(() => {
-            blinkOnce();
-            scheduleBlink();
-        }, delay);
+      const delay = Math.random() * 4000 + 2500;
+    
+      blinkTimer = setTimeout(() => {
+        if (isSleeping) return;
+        blinkOnce();
+        scheduleBlink();
+      }, delay);
     }
 
-    scheduleBlink();
+    function scheduleDoze() {
+      updateTimeState();
+      clearTimeout(dozeTimer);
+    
+      dozeTimer = setTimeout(goToSleep, timeState.timeToSleep);
+    }
+    
+    function cancelDoze() {
+      clearTimeout(dozeTimer);
+      dozeTimer = null;
+    }
+    
+    function stopBlinking() {
+      clearTimeout(blinkTimer);
+      blinkTimer = null;
+    }
+
+    // Her behaviour
+      function goToSleep() {
+        if(isSleeping) return;
+
+        isSleeping = true;
+        stopBlinking();
+        cancelDoze()
+      
+        idle.style.opacity = "0";
+        blink.style.opacity = "1";
+
+        setTimeout(() => { 
+          speaky.classList.remove("hidden");
+          setSpeech("Zzz...");
+        },timeState.timeToSleep);
+      }
+      
+      function wakeUp() {
+        if (!isSleeping) return;
+        
+        isSleeping = false;
+
+        blink.style.opacity = "1";
+        setTimeout(() => {
+          idle.style.opacity = "1";
+          blink.style.opacity = "0";
+        }, timeState.timeToWakeUp);
+
+        cancelDoze();
+        scheduleBlink();
+      }
+
+      function getRandomGreet(arr) {
+        const i = Math.floor(Math.random() * arr.length);
+        return arr[i];
+      }
+
+      function setSpeech(text) {
+        if (!speaky) return;
+      
+        speaky.classList.add("hidden");
+      
+        setTimeout(() => {
+          speaky.textContent = text;
+          speaky.classList.remove("hidden");
+        }, 250);
+      }
+
+      blink.addEventListener("animationend", (event) => {
+        if (event.animationName === "dropShadow") {
+          wakeUp()
+          setSpeech("Hm?");
+        }
+      });
+      
+      heranim.addEventListener("mouseenter", () => {
+        cancelDoze();
+        wakeUp();
+
+        const greet = ["Hello.", "Hey.", "Hey!", "What's up?", "Hm."];
+        const randomGreet = getRandomGreet(greet);
+        setSpeech(randomGreet);
+      });
+      
+      heranim.addEventListener("mouseleave", () => {
+        setSpeech("...");
+
+        setTimeout(() => {
+          speaky.classList.add("hidden");
+        }, 5000);
+
+        scheduleDoze();
+
+      });
+
+      scheduleBlink();
 });
-
-// get TOD
-function getTimeOfDay() {
-  const currentHour = new Date().getHours();
-  let timeOfDay;
-
-  if (currentHour >= 5 && currentHour < 12) {
-    timeOfDay = "GOOD MORNING, ";
-  } else if (currentHour >= 12 && currentHour < 17) {
-    timeOfDay = "GOOD AFTERNOON, ";
-  } else if (currentHour >= 17 && currentHour < 21) {
-    timeOfDay = "GOOD EVENING,";
-  } else {
-    timeOfDay = "GOOD NIGHT, ";
-  }
-
-  return timeOfDay;
-}
 
 // Breaking news:
 async function loadBreakingNews() {
@@ -129,7 +254,7 @@ async function loadBreakingNews() {
     if (!text) {
       document.getElementById('news').innerHTML = empty.trim();
     } else {
-      document.getElementById('news').innerHTML = getTimeOfDay() + "OUR BELOVED VIEWERS. " + text.trim().toUpperCase();
+      document.getElementById('news').innerHTML = timeState.timeOfDay + "OUR BELOVED VIEWERS. " + text.trim().toUpperCase();
     }
     
   } catch (err) {

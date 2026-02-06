@@ -310,6 +310,10 @@ a:hover {
   }
 
 .her.idle {
+    opacity: 0;
+}
+
+.her.blink {
     opacity: 1;
 }
 
@@ -364,6 +368,54 @@ a:hover {
     height: auto;
     text-align:center;
     z-index: 9999;
+}
+
+@keyframes speakyBreathing {
+    0%, 100% { transform: translateY(1vh) scale(1);}
+    50% { transform: translateY(1.3vh) scale(1);}
+}
+
+.speaky {
+    animation-name: intro, speakyBreathing;
+    animation-duration: 2s, 2s;
+    animation-delay: 0s, 0s;
+    animation-iteration-count: 1, infinite;
+    animation-fill-mode: forwards;
+
+    filter:none;
+    pointer-events: auto;
+    transition: 0.2s ease-in;
+    background-color: #0f0f0f;
+    text-shadow: 0 0 6px;
+    color: #fff;
+    font-size: 1rem;
+    position: fixed;
+    max-width: auto;
+    right: 20vw;
+    top: 30vh;
+    padding: 1px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: auto;
+    text-align:center;
+    z-index: 9999;
+}
+
+.leftPat {
+    display: block;
+    right: 10vw;
+    top: 20vh;
+    position:absolute;
+    width: 20vw;
+    background-color: red;
+}
+
+.speaky {
+    opacity: 1;
+    transition: opacity 0.25s ease;
+  }
+.speaky.hidden {
+    opacity: 0;
 }
 
 @keyframes scroll-left {
