@@ -7,6 +7,15 @@
 	--lgray: #1f1f1f
 }
 
+@keyframes boot {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 * {
 	margin: 0;
 	padding: 0;
@@ -61,16 +70,90 @@ body {
    	-ms-user-select: none;
    	user-select: none;
 
-    min-height: 100vh;
-    overflow-y: scroll;
+    /* min-height: 100vh; */
+    height: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 
     scroll-snap-type: block mandatory;
     box-shadow: inset 0 0 100px 60px rgb(0, 0, 0);
 
 }
 
+.hl {
+}
+
+.subpage-text {
+    margin-top: 10vh;
+    margin-left: 2vw;
+    max-width: 45vw;
+}
+
+.mep {
+    width: 15vw;
+    margin-left: 2vw;
+}
+
+
 body.loaded {
   opacity: 1;
+}
+
+/* @keyframes typing {
+    0% {
+        content: "F"
+    }
+    5% {
+        content: "FA"
+    }
+    10% {
+        content: "FAL"
+    }
+    15% {
+        content: "FALS"
+    }
+    20% {
+        content: "FALSE"
+    }
+    25% {
+        content: "FALSEQ"
+    }
+    30% {
+        content: "FALSEQU"
+    }
+    35% {
+        content: "FALSEQUA"
+    }
+    40% {
+        content: "FALSEQUAL"
+    }
+    45% {
+        content: "FALSEQUALI"
+    }
+    50% {
+        content: "FALSEQUALIF"
+    }
+    55% {
+        content: "FALSEQUALIFI"
+    }
+    60% {
+        content: "FALSEQUALIFIE"
+    }
+    65% {
+        content: "FALSEQUALIFIED"
+    }
+    100% {
+        content: "FALSEQUALIFIED" 
+    }
+} */
+
+@keyframes caret {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
 }
 
 p {
@@ -81,6 +164,82 @@ p {
     0 0 6px rgba(205, 131, 4, 0.2),
     0 0 12px rgba(188, 131, 16, 0.08); */
 }
+
+:root {
+    --term-lines: 1;
+    --term-line-height: 1.4em;
+  }
+
+  #terminal {
+    font-weight: 600;
+    filter: brightness(250%);
+    width: 35vw;
+  
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  
+    background: #0b0b0b;
+    box-shadow: 10px 10px 1px rgb(18, 18, 18);
+
+    padding: 12px 20px;
+    box-sizing: border-box;
+  
+    display: grid;
+    row-gap: 0;
+  
+    overflow: hidden;
+  }
+  
+  .input-line {
+    grid-row: 1;
+    display: flex;
+    align-items: center;
+  
+    height: 100%;
+  }
+  
+  #terminal.expanded {
+    grid-template-rows: repeat(auto-fit, minmax(var(--term-line-height), auto));
+    height: auto;
+  }
+
+  #log {
+    margin-top: 1rem;
+    padding: 0 20px;
+  
+    white-space: pre-wrap;
+    line-height: 1.4;
+  
+    opacity: 0.85;
+    filter: brightness(150%);
+    text-shadow: 0 0 6px;
+    max-height: none; 
+  }
+
+  input {
+    margin-left: 5px;
+    flex: 1;
+  
+    background: none;
+    border: none;
+    outline: none;
+  
+    color: inherit;
+    font-family: inherit;
+  
+    caret-color: currentColor;
+    text-shadow: 0 0 6px;
+  }
+
+#caret {
+    background: #ffa600;
+    animation: blink 1s steps(1) infinite;
+  }
+  
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
 
 #hud {
     position: fixed;
@@ -108,10 +267,14 @@ div.foreground {
     width: 100%;
     backdrop-filter: blur(8px);
     z-index: 1;
-    position: fixed;
+    position: relative;  /* NOT fixed */
+    min-height: 100vh;
 }
 
 .container {
+    animation: boot 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
 	/* position: fixed; */
     width: 100%;
     max-width: 60vw;
