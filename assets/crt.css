@@ -26,6 +26,7 @@
         rgba(255,255,255,0.015) 2px
       );
 
+
     /* animation:
       crt-flicker 0.15s infinite,
       crt-noise-move 0.6s infinite; */
@@ -44,9 +45,9 @@
 }
 .scanlines:before {
     width: 100%;
-    height: 2px;
+    height: 40px;
     z-index: 2147483649;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.166);
     opacity: 0.75;
     animation: scanline 6s linear infinite;
 }
@@ -68,7 +69,16 @@
 /* ANIMATE UNIQUE SCANLINE */
 @keyframes scanline {
     0% {
-        transform: translate3d(0, 200000%, 0);
+        transform: translate3d(0, 4500%, 0);
+        offset-distance: 0%;
+        background: rgba(255, 255, 255, 0.054);
+    }
+    50% {
+      background: rgba(255, 255, 255, 0.089);
+    }
+    100% {
+      background: rgba(255, 255, 255, 0);
+      offset-distance: 100%;
     }
 }
 @keyframes scanlines {
