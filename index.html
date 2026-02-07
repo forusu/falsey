@@ -3,57 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <title>falsey.mom</title>
-  <link id="style" rel="stylesheet" href="assets/index.css" media>
-  <link id="style" rel="stylesheet" href="assets/crt.css" media>
+  <link rel="stylesheet" href="assets/index.css" media>
+  <link rel="stylesheet" href="assets/crt.css" media>
   <link id="icon" rel="icon" href="assets/yh.svg">
   <link rel="preload" as="font" href="../assets/VCR.ttf" crossorigin>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="keywords" content="falsequalified, fsq, aquifer, esquisse, pngtuber, streamer, portfolio">
-  <meta name="og:title" content="falsequalified">
-  <meta name="og:description" content="falsey's personal website, projects, lore">
-  <meta name="description" content="falsey's personal website, projects, lore">
+
+  <style>
+    @font-face {
+      font-family: "VCR";
+      src: url("../assets/VCR.ttf") format("truetype");
+      font-display: swap;
+    }
+    </style>
+
+  <meta property="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="keywords" content="falsequalified, fsq, aquifer, esquisse, pngtuber, streamer, portfolio">
+  <meta property="og:title" content="falsequalified">
+  <meta property="og:description" content="falsey's personal website, projects, lore">
+  <meta property="description" content="falsey's personal website, projects, lore">
   
   <meta property="og:image" content="https://falsey.mom/images/banner.webp">
   <meta property="og:image:alt" content="A striking sunset.">
   <meta property="og:image:width" content="2048">
   <meta property="og:image:height" content="956">
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@fsqs_">
-  <meta name="twitter:creator" content="@fsqs_">
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:site" content="@fsqs_">
+  <meta property="twitter:creator" content="@fsqs_">
 	
-  <meta name="og:author" content="made by Melissa <3">
-  <meta name="author" content="made by Melissa <3">
-  <meta name="theme-color" content="#ffb33b">
-  <script src="scripts/index.js" type="application/javascript"></script>
-  <meta charset="utf-8">
+  <meta property="og:author" content="made by Melissa <3">
+  <meta property="author" content="made by Melissa <3">
+  <meta property="theme-color" content="#ffb33b">
+
+  <link rel="preconnect" href="https://wttr.in">
+  <script src="scripts/index.js" defer></script>
 </head>
 
-<script>
-  function startTime() {
-    const now = new Date();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    h = checkTime(hours);
-    m = checkTime(minutes);
-
-    const shortTimeZone = new Intl.DateTimeFormat('en-US', { timeZoneName: 'short' })
-    .formatToParts(now)
-    .find(part => part.type === 'timeZoneName')
-    .value;
-
-    setTimeout(startTime, 1000);
-
-    function checkTime(i) {
-    if (i < 10) {i = "0" + i};
-    return i;
-    }
-
-    document.getElementById('clock').innerText = shortTimeZone + " " + h + ":" + m
-}
-</script>
-
-<body class="theme" onload="startTime()">
+<body class="theme">
   
   <div class="crt"></div>
   <div class="crt-screen">
@@ -79,7 +65,8 @@
 
         <p><span class="text-subtitle-small">
           
-            My name is <span class="hl lissa">Melissa</span> Welcome! <p id="clock"></p> <br>
+            My name is <span class="hl lissa">Melissa</span> Welcome!
+            <div id="clock"></div> <br>
 
         </p></span>
         <div class="text-subtitle">
@@ -138,13 +125,13 @@
   <div class="heranim">
     <p class="speaky">Zzz...</p>
     <p class="bsu"><a class="scary" href="database.html">BSU 0013</a></p>
-
+<!-- 
     <div class="leftPat"></div>
-    <div class="rightPat"></div>
-    <img class="her idle" src="images/idle_nh.webp">
-    <img class="her blink" src="images/idle_blink_nh.webp">
-    <img class="her speak" src="images/speak.webp">
-    <img class="her speakblink" src="images/speak_blink.webp">
+    <div class="rightPat"></div> -->
+    <img class="her idle" src="images/idle_nh.webp" decoding="async">
+    <img class="her blink" src="images/idle_blink_nh.webp" decoding="async">
+    <img class="her speak" src="images/speak.webp" loading="lazy" decoding="async">
+    <img class="her speakblink" src="images/speak_blink.webp" loading="lazy" decoding="async">
     
   </div>
 </div> 
