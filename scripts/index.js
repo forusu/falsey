@@ -123,6 +123,7 @@ function blinkInit() {
   const idle = document.querySelector(".her.body.idle");
   const blink = document.querySelector(".her.face.blink");
   const speakblink = document.querySelector(".her.face.speakblink");
+  const happy = document.querySelector(".her.face.speakhappy");
   const speak = document.querySelector(".her.face.speak");
   const heranim = document.querySelector(".heranim");
   const speaky = document.querySelector(".speaky");
@@ -191,20 +192,47 @@ function blinkInit() {
 
   // Her behaviour
   function goToSleep() {
-
-    if(isSleeping) return;
+    if (isSleeping) return;
 
     isSleeping = true;
     stopBlinking();
-    cancelDoze()
-  
-    blink.style.opacity = "1";
+    cancelDoze();
 
-    setTimeout(() => { 
-      speaky.classList.remove("hidden");
-      setSpeech("Zzz...");
-    },timeState.timeToSleep);
-  }
+    blink.style.opacity = "1"; 
+    speakblink.style.opacity = "0";  
+    speaky.classList.add("hidden"); 
+
+    setTimeout(() => {
+        setSpeech("Zzz...");
+
+        let startTime = null;
+
+        function animateSleep(timestamp) {
+            if (!isSleeping) {
+
+                blink.style.opacity = "1";
+                speakblink.style.opacity = "0";
+                speaky.classList.add("hidden");
+                return;
+            }
+
+            if (!startTime) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+
+            const cycle = Math.sin((elapsed / 1500) * Math.PI); 
+            blink.style.opacity = cycle > 0 ? "1" : "0";
+            speakblink.style.opacity = cycle > 0 ? "0" : "1";
+
+            speaky.classList.toggle("hidden", cycle > 0);
+
+            requestAnimationFrame(animateSleep);
+        }
+
+        requestAnimationFrame(animateSleep);
+
+    }, timeState.timeToSleep);
+}
+
   
   function wakeUp() {
     if (!isSleeping) return;
@@ -260,6 +288,15 @@ function blinkInit() {
 
       const greet = ["Hey.", "Hey!", "What's up?", "Hm.", "Oh?", "Thank you."];
       const randomGreet = getRandomGreet(greet);
+
+
+      if (randomGreet === "Hey!") {
+        happy.style.opacity = "1"
+
+        setTimeout(() => {
+          happy.style.opacity = "0"
+        }, 2000);
+      }
       setSpeech(randomGreet);
     });
     
