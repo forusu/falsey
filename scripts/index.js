@@ -28,8 +28,10 @@ function biosInit() {
         closedW = "200vw";
         openW = "200vw";
       } else {
-        closedW = "15vw";
-        openW = "45vw";
+        // closedW = "15vw";
+        // openW = "45vw";
+        openW = g_openW
+        closedW = g_closedW
       };
 
 
@@ -117,18 +119,16 @@ function startTime() {
 
 // Blinky blinky
 function blinkInit() {
-  const idle = document.querySelector(".her.idle");
-  const blink = document.querySelector(".her.blink");
-  const speakblink = document.querySelector(".her.speakblink");
+  const idle = document.querySelector(".her.body.idle");
+  const blink = document.querySelector(".her.face.blink");
+  const speakblink = document.querySelector(".her.face.speakblink");
   const heranim = document.querySelector(".heranim");
   const speaky = document.querySelector(".speaky");
   var isSleeping = false;
-
-  idle.style.opacity = "0";
   if (!idle || !blink || !heranim) return;
 
   function blinkOnce() {
-      idle.style.opacity = "0";
+
       if (heranim.matches(":hover")) {
           speakblink.style.opacity = "1"
       }
@@ -196,7 +196,6 @@ function blinkInit() {
     stopBlinking();
     cancelDoze()
   
-    idle.style.opacity = "0";
     blink.style.opacity = "1";
 
     setTimeout(() => { 
@@ -212,7 +211,6 @@ function blinkInit() {
 
     blink.style.opacity = "1";
     setTimeout(() => {
-      idle.style.opacity = "1";
       blink.style.opacity = "0";
     }, timeState.timeToWakeUp);
 

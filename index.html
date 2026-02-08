@@ -8,6 +8,10 @@
   <link id="icon" rel="icon" href="assets/yh.svg">
   <link rel="preload" as="font" href="../assets/VCR.ttf" crossorigin>
 
+  <link rel="preload" as="image" href="images/f_blink.webp">
+  <link rel="preload" as="image" href="images/f_speak.webp">
+  <link rel="preload" as="image" href="images/f_spblink.webp">
+
   <style>
     @font-face {
       font-family: "VCR";
@@ -40,7 +44,11 @@
 </head>
 
 <body class="theme">
-  
+  <script>
+  var g_openW = "45vw"
+  var g_closedW = "15vw"
+  </script>
+
   <div class="crt"></div>
   <div class="crt-screen">
     <div class="scanlines">
@@ -95,7 +103,7 @@
 
             <span class="bios"> Skills</span>
               <span class="bio">
-                <section>
+                <section class="bio-content">
                 <br>
                   <span class="hl">My major skills are:</span> <br>OSINT, <div class="tooltip">Art<span class="tooltiptext">(Photography, Pixel art, Digital drawing, Visual design)</span></div>,
                   <div class="tooltip">Programming<span class="tooltiptext">(C, C++, Python, JS, HTML+CSS)</span></div></span>, Social Engineering, Networking, Languages, Translation, Writing, Crisis Management, Video editing, Geography, Memorisation, Teambuilding, <div class="tooltip">Typing <div class="tooltiptext">150wpm 15s</div></div><br><br>
@@ -128,11 +136,13 @@
 <!-- 
     <div class="leftPat"></div>
     <div class="rightPat"></div> -->
-    <img class="her idle" src="images/idle_nh.webp" decoding="async">
-    <img class="her blink" src="images/idle_blink_nh.webp" decoding="async">
-    <img class="her speak" src="images/speak.webp" loading="lazy" decoding="async">
-    <img class="her speakblink" src="images/speak_blink.webp" loading="lazy" decoding="async">
-    
+    <img class="her body idle" src="images/idle_nh.webp" decoding="async">
+    <img class="her body speak" src="images/speak.webp" decoding="async">
+    <img class="her face blink" src="images/f_blink.webp" decoding="async">
+    <img class="her face happy" src="images/f_happy.webp" decoding="async">
+    <img class="her face speak" src="images/f_speak.webp" decoding="async">
+    <img class="her face speakblink" src="images/f_spblink.webp" decoding="async">
+
   </div>
 </div> 
 </div>

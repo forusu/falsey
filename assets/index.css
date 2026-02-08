@@ -66,8 +66,7 @@ body {
    	user-select: none;
 
     /* min-height: 100vh; */
-    overflow-y: auto;
-    scrollbar-gutter: stable;
+    overflow-y: hidden;
 
     /* scroll-snap-type: block mandatory; */
 
@@ -79,6 +78,7 @@ div.foreground {
     width: 100%;
     z-index: 1;
     overflow-y: auto;
+    scrollbar-gutter: stable both-edges;
     box-shadow: inset 0 0 100px 50px rgb(0, 0, 0);
 }
 
@@ -150,7 +150,7 @@ html, body {
 
 html {
     font-size: 16px;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
 }
 
 #hud {
@@ -291,7 +291,9 @@ from {
 }
 
 .heranim {
-    animation: breathe 3s ease-in-out infinite;
+    animation:
+    intro 2s forwards,
+    breathe 3s ease-in-out infinite;
     /* animation-delay: 6s; */
     image-rendering: crisp-edges;
     position: fixed;
@@ -305,18 +307,33 @@ from {
     transition: 0.3s ease-in-out;
 }
 
+.her {
+    transform: rotate(8deg);
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.her.body {
+    animation-name: dropShadow, breatheShadow;
+    animation-duration: 4s, 3.5s;
+    animation-iteration-count: 1, infinite;
+    animation-fill-mode: forwards;
+    animation-delay: 2s, 4s;
+}
+
 .heranim img {
     grid-area: 1 / 1;
     width: 100%;
     height: auto;
     opacity: 0;
-  }
-
-.her.idle {
-    opacity: 0;
 }
 
-.her.blink {
+.her.body.idle {
+    opacity: 1;
+}
+
+.her.face.blink {
     opacity: 1;
 }
 
@@ -338,19 +355,11 @@ from {
     opacity: 1;
     transition: 0.3s ease-in-out;
 }
+
+
 .heranim:hover .bsu {
     filter: none !important;
     opacity: 1;
-}
-
-.her {
-    transform: rotate(8deg);
-    animation-name: intro, dropShadow, breatheShadow;
-    animation-duration: 2s, 4s, 3.5s;
-    animation-iteration-count: 1, 1, infinite;
-    animation-fill-mode: forwards;
-    animation-delay: 0s, 2s, 4s;
-    /* filter: drop-shadow(30px 10px 0px #fabd2e); */
 }
 
 .bsu {
@@ -567,6 +576,7 @@ from {
     max-width: 15vw;
     background-color: rgba(30, 30, 30, 0.56);
     box-shadow: 12px 12px 1px rgb(41, 41, 41);
+    contain: layout paint;
     /* overflow-anchor: none; */
 }
 
@@ -586,6 +596,7 @@ from {
     cursor: pointer;
     display: block;
     transition: ease-out 1s;
+    will-change: opacity;
 }
 
 .bios::before {
@@ -597,7 +608,9 @@ from {
     transition: ease-in 0.2s;
 }
 
-.bio {
+/* .bio {
+    will-change: opacity;
+    contain: layout paint;
     display: grid;
     grid-template-rows: 0fr;
     opacity: 0;
@@ -606,14 +619,37 @@ from {
         opacity 0.25s ease;
 }
 
-.bio > * {
-    overflow: hidden;
+.bio.open {
+    grid-template-rows: 1fr;
+    opacity: 1;
+} */
+
+.bio {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition:
+        grid-template-rows 0.18s ease,
+        opacity 0.12s ease 0.18s;
+
+    will-change: opacity;
+    contain: layout paint;
 }
 
 .bio.open {
     grid-template-rows: 1fr;
     opacity: 1;
 }
+
+.bio-content {
+    contain: paint;
+}
+
+.bio > * {
+    overflow: hidden;
+}
+
+
 
 .bios.hopen::before {
     color: var(--hlb);
