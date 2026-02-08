@@ -119,9 +119,11 @@ function startTime() {
 
 // Blinky blinky
 function blinkInit() {
+  const body = document.querySelector(".her.body");
   const idle = document.querySelector(".her.body.idle");
   const blink = document.querySelector(".her.face.blink");
   const speakblink = document.querySelector(".her.face.speakblink");
+  const speak = document.querySelector(".her.face.speak");
   const heranim = document.querySelector(".heranim");
   const speaky = document.querySelector(".speaky");
   var isSleeping = false;
@@ -234,11 +236,16 @@ function blinkInit() {
       }, 250);
     }
 
-    blink.addEventListener("animationend", (event) => {
+    body.addEventListener("animationend", (event) => {
       if (isSleeping) return;
       if (event.animationName === "dropShadow") {
         wakeUp()
         let tod = timeState.timeOfDay.toLowerCase().trim().replace("good", "Good").replaceAll(",", "!")
+
+        speak.style.opacity = "1";
+        setTimeout(() => {
+          speak.style.opacity = "0";
+        }, 2500);
 
         const greet = [tod, "Hm?", "Huh?", "Hello."];
         const randomGreet = getRandomGreet(greet);
