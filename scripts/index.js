@@ -1,11 +1,13 @@
 let timeState = getTimeOfDay();
 setInterval(() => timeState = getTimeOfDay(), 60_000);
+let bgAudio = document.querySelector("audio")
 
 // Bio stuff handling
 document.addEventListener("DOMContentLoaded", () => {
   biosInit();
   blinkInit();
   startTime();
+  bgAudio.volume = 0.5;
 });
 
 document.addEventListener("visibilitychange", () => {
@@ -121,6 +123,7 @@ function startTime() {
 function blinkInit() {
   const body = document.querySelector(".her.body");
   const idle = document.querySelector(".her.body.idle");
+  const idlef = document.querySelector(".her.face.idlef");
   const speakbody = document.querySelector(".her.body.speak");
   const blink = document.querySelector(".her.face.blink");
   const speakblink = document.querySelector(".her.face.speakblink");
@@ -141,6 +144,7 @@ function blinkInit() {
     blink.style.opacity = "0";
     speak.style.opacity = "0";
     happy.style.opacity = "0";
+    idlef.style.opacity = "0";
     speakblink.style.opacity = "0";
     speakhappy.style.opacity = "0";
   }
@@ -237,12 +241,14 @@ function blinkInit() {
     const sleepPhrases = [
       { text: "Zzz...", weight: 5 },
       { text: "mmh... zzz...", weight: 2 },
-      { text: "ZzZ...", weight: 3 },
+      { text: "ZzZ...", weight: 5 },
       { text: "zz.. zz..", weight: 2 },
-      { text: "radioactive...", weight: 1 },
+      { text: "radioactive...", weight: 2 },
+      { text: "fronto...genesis..", weight: 2 },
+      { text: "class 7...", weight: 2 },
       { text: "she didn't...", weight: 1 },
-      { text: "deserve... it...", weight: 1 },
-      { text: "she.. innocent..", weight: 1 }
+      { text: "didn't.. deserve... it...", weight: 1 },
+      { text: "she was.. innocent..", weight: 1 }
     ];
   
     function getWeightedPhrase() {
@@ -342,9 +348,10 @@ function blinkInit() {
 
         const greet = [tod, "Hm?", "Huh?", "Hello."];
         const randomGreet = getRandomGreet(greet);
-        setSpeech(randomGreet);
+        setSpeech(randomGreet, { cheery: randomGreet === tod, autoClose: true });
 
         hasIntroed = true;
+        bgAudio.muted = false;
         scheduleIdleAttention();
       }
     });
@@ -376,8 +383,11 @@ function blinkInit() {
       const greet = ["Hey.", "Hey!", "What's up?", "Hm.", "Oh?", "Thank you."];
       const randomGreet = getRandomGreet(greet);
 
-
-      setSpeech(randomGreet, { cheery: randomGreet === "Hey!" });
+      showFace(speak);
+      setSpeech(randomGreet, { cheery: randomGreet === "Hey!"});
+      setTimeout(() => {
+        showFace(idlef);
+      }, 2500);
     });
     
     heranim.addEventListener("mouseleave", () => {
