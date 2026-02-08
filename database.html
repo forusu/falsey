@@ -28,10 +28,10 @@
   <script src="scripts/terminal.js" defer></script>
 </head>
 
-
-<style>
-
-</style>
+<script>
+  const blink = document.querySelector(".her.face.blink")
+  blink.style.opacity = "1"
+</script>
 
 <body>
   <div class="crt-screen">
@@ -66,7 +66,8 @@
 
 
   <div class="heranim" style="right:5vw; ">
-    <img class="her blink" src="images/idle_blink_nh.webp" style="opacity: 1; filter: grayscale(100%) brightness(15%) contrast(100%); animation-fill-mode: none; animation: none;">
+    <img class="her face blink" src="images/f_blink.webp">
+    <img class="her body" src="images/idle_nh.webp" style="opacity: 1; filter: grayscale(100%) brightness(15%) contrast(100%); animation-fill-mode: none; animation: none;">
     <p class="bsu" style="min-width:5vw; color: pointer; background-color: black;"><a class="scary" href="index.html">HOME</a></p>
   </div>
   

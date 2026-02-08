@@ -115,16 +115,22 @@ div.foreground {
 .bg {
     position: absolute;
     inset: 0;
-  
+    
+    will-change: opacity;
+    backface-visibility: hidden;
+
     background-size: cover;
     background-position: 50% 45%;
     background-repeat: no-repeat;
 }
 
 @keyframes bgCycle {
-  0%, 100% { opacity: 0; }
-  5%, 25%  { opacity: 1; }
-}
+    0%   { opacity: 0; }
+    2%   { opacity: 1; }
+    18%  { opacity: 1; }
+    20%  { opacity: 0; }
+    100% { opacity: 0; }
+  }
 
 .bg.base {
   background-image: url("../images/bg_poc.webp");
@@ -345,17 +351,20 @@ from {
     opacity: 0;
 }
 
-.heranim:hover .her.idle,
-.heranim:hover .her.blink,
-.heranim:hover .her.speakblink {
-    opacity: 0;
+.her.face {
+    transition: opacity 0.15s ease-in-out;
+    will-change: opacity;
 }
 
-.heranim:hover .her.speak {
-    opacity: 1;
-    transition: 0.3s ease-in-out;
+.her.face.sleep {
+    transition: none;
+    will-change: opacity;
 }
 
+.her.body {
+    transition: opacity 0.15s ease-in-out;
+    will-change: opacity;
+}
 
 .heranim:hover .bsu {
     filter: none !important;

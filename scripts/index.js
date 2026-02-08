@@ -121,41 +121,58 @@ function startTime() {
 function blinkInit() {
   const body = document.querySelector(".her.body");
   const idle = document.querySelector(".her.body.idle");
+  const speakbody = document.querySelector(".her.body.speak");
   const blink = document.querySelector(".her.face.blink");
   const speakblink = document.querySelector(".her.face.speakblink");
-  const happy = document.querySelector(".her.face.speakhappy");
+  const speakhappy = document.querySelector(".her.face.speakhappy");
+  const happy = document.querySelector(".her.face.happy");
   const speak = document.querySelector(".her.face.speak");
   const heranim = document.querySelector(".heranim");
   const speaky = document.querySelector(".speaky");
-  var isSleeping = false;
+
+  let isSpeaking = false;
+  let isDozing = false;
+  let isSleeping = false;
+  let isBlinking = false;
+
   if (!idle || !blink || !heranim) return;
 
-  function blinkOnce() {
-
-      if (heranim.matches(":hover")) {
-          speakblink.style.opacity = "1"
-      }
-      blink.style.opacity = "1";
-      // Speech bubble stuff
-      setTimeout(() => {
-          
-          if (heranim.matches(":hover")) {
-              idle.style.opacity = "1";
-              blink.style.opacity = "0";
-              speakblink.style.opacity = "0"
-          } else {
-
-              speakblink.style.opacity = "0";
-              blink.style.opacity = "0";
-              idle.style.opacity = "1";
-
-          }
-
-      }, 120);
-
+  function hideAllFaces() {
+    blink.style.opacity = "0";
+    speak.style.opacity = "0";
+    happy.style.opacity = "0";
+    speakblink.style.opacity = "0";
+    speakhappy.style.opacity = "0";
+  }
+  
+  function showFace(face) {
+    hideAllFaces();
+    face.style.opacity = "1";
   }
 
+  function blinkOnce() {
+    if (isSleeping || isBlinking) return;
+  
+    isBlinking = true;
+    
+    if (isSpeaking) {
+      showFace(speakblink);
+    } 
+
+    if (isDozing) {
+      showFace(blink)
+    }
+
+    setTimeout(() => {
+      hideAllFaces();
+      isBlinking = false;
+    }, 120);
+  }
+
+  let speechHideTimer = null;
   let blinkTimer = null;
+  let idleTimer = null;
+  const IDLE_DELAY = 8000;
   const DOZE_DELAY = 7500;
   const HIDE_DELAY = 5000;
   let dozeTimer = null;
@@ -174,13 +191,16 @@ function blinkInit() {
   function scheduleDoze() {
     clearTimeout(dozeTimer);
     clearTimeout(hideTimer);
-  
+
+    isDozing = true;
     dozeTimer = setTimeout(goToSleep, timeState.timeToSleep);
   }
   
   function cancelDoze() {
     clearTimeout(dozeTimer);
     clearTimeout(hideTimer);
+
+    isDozing = false;
     dozeTimer = null;
     hideTimer = null;
   }
@@ -190,78 +210,128 @@ function blinkInit() {
     blinkTimer = null;
   }
 
+  function openMouth(cheery = false) {
+    speak.style.opacity = cheery ? "0" : "1";
+    speakhappy.style.opacity = cheery ? "1" : "0";
+  }
+  
+  function closeMouth() {
+    speak.style.opacity = "0";
+    speakhappy.style.opacity = "0";
+  }
+
   // Her behaviour
   function goToSleep() {
     if (isSleeping) return;
-
     isSleeping = true;
+    isDozing = false;
+  
     stopBlinking();
     cancelDoze();
-
-    blink.style.opacity = "1"; 
-    speakblink.style.opacity = "0";  
-    speaky.classList.add("hidden"); 
-
-    setTimeout(() => {
-        setSpeech("Zzz...");
-
-        let startTime = null;
-
-        function animateSleep(timestamp) {
-            if (!isSleeping) {
-
-                blink.style.opacity = "1";
-                speakblink.style.opacity = "0";
-                speaky.classList.add("hidden");
-                return;
-            }
-
-            if (!startTime) startTime = timestamp;
-            const elapsed = timestamp - startTime;
-
-            const cycle = Math.sin((elapsed / 1500) * Math.PI); 
-            blink.style.opacity = cycle > 0 ? "1" : "0";
-            speakblink.style.opacity = cycle > 0 ? "0" : "1";
-
-            speaky.classList.toggle("hidden", cycle > 0);
-
-            requestAnimationFrame(animateSleep);
-        }
-
-        requestAnimationFrame(animateSleep);
-
-    }, timeState.timeToSleep);
-}
-
   
-  function wakeUp() {
-    if (!isSleeping) return;
-    
-    isSleeping = false;
-
-    blink.style.opacity = "1";
-    setTimeout(() => {
-      blink.style.opacity = "0";
-    }, timeState.timeToWakeUp);
-
-    cancelDoze();
-    scheduleBlink();
+    showFace(blink);
+    blink.classList.add("sleep");
+    speakblink.classList.add("sleep");
+    speaky.classList.add("hidden");
+  
+    const sleepPhrases = [
+      { text: "Zzz...", weight: 5 },
+      { text: "mmh... zzz...", weight: 2 },
+      { text: "ZzZ...", weight: 3 },
+      { text: "zz.. zz..", weight: 2 },
+      { text: "radioactive...", weight: 1 },
+      { text: "she didn't...", weight: 1 },
+      { text: "deserve... it...", weight: 1 },
+      { text: "she.. innocent..", weight: 1 }
+    ];
+  
+    function getWeightedPhrase() {
+      const total = sleepPhrases.reduce((sum, p) => sum + p.weight, 0);
+      let r = Math.random() * total;
+      for (let p of sleepPhrases) {
+        if (r < p.weight) return p.text;
+        r -= p.weight;
+      }
+      return sleepPhrases[0].text;
+    }
+  
+    function sleepTalk() {
+      if (!isSleeping) return;
+      const phrase = getWeightedPhrase();
+      setSpeech(phrase, { autoClose: true, cheery: false });
+      setTimeout(sleepTalk, HIDE_DELAY + Math.random() * 4000);
+    }
+  
+    setTimeout(sleepTalk, timeState.timeToSleep);
+  
+    let startTime = null;
+    function animateSleep(timestamp) {
+      if (!isSleeping) return;
+  
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const cycle = Math.sin((elapsed / 1500) * Math.PI);
+  
+      blink.style.opacity = cycle > 0 ? "1" : "0";
+      speakblink.style.opacity = cycle > 0 ? "0" : "1";
+  
+      requestAnimationFrame(animateSleep);
+    }
+  
+    requestAnimationFrame(animateSleep);
   }
+
+    function wakeUp() {
+      if (!isSleeping) return;
+      speakblink.classList.remove("sleep");
+      blink.classList.remove("sleep");
+      isDozing = false;
+      isSleeping = false;
+      const greet = ["Huh...", "Ah!", "Where am I...", "I had a weird dream..", ".. What"];
+      const randomGreet = getRandomGreet(greet);
+
+      showFace(blink)
+      setTimeout(() => {
+        hideAllFaces()
+        setTimeout(() => {
+          showFace(blink)
+        }, timeState.timeToWakeUp/2);
+        hideAllFaces()
+        setSpeech(randomGreet);
+      }, timeState.timeToWakeUp);
+      
+
+      cancelDoze();
+      scheduleBlink();
+    }
 
     function getRandomGreet(arr) {
       const i = Math.floor(Math.random() * arr.length);
       return arr[i];
     }
 
-    function setSpeech(text) {
-      if (!speaky) return;
-    
-      speaky.classList.add("hidden");
-    
-      setTimeout(() => {
-        speaky.textContent = text;
-        speaky.classList.remove("hidden");
-      }, 250);
+    function setSpeech(text, options = {}) {
+      const { autoClose = true, cheery = false } = options;
+
+      clearTimeout(speechHideTimer);
+      speaky.textContent = text;
+      speaky.classList.remove("hidden");
+
+      if (!isSleeping) {
+        if (cheery) openMouth(true);
+        else openMouth(false);
+      }
+
+      isSpeaking = true;
+
+      if (autoClose) {
+        speechHideTimer = setTimeout(() => {
+          speaky.classList.add("hidden");
+          isSpeaking = false;
+          if (!isSleeping && !isBlinking) hideAllFaces();
+          if (!isSleeping) closeMouth();
+        }, HIDE_DELAY);
+      }
     }
 
     body.addEventListener("animationend", (event) => {
@@ -270,19 +340,36 @@ function blinkInit() {
         wakeUp()
         let tod = timeState.timeOfDay.toLowerCase().trim().replace("good", "Good").replaceAll(",", "!")
 
-        speak.style.opacity = "1";
-        setTimeout(() => {
-          speak.style.opacity = "0";
-        }, 2500);
-
         const greet = [tod, "Hm?", "Huh?", "Hello."];
         const randomGreet = getRandomGreet(greet);
         setSpeech(randomGreet);
 
+        hasIntroed = true;
+        scheduleIdleAttention();
       }
     });
+  
+
+    function scheduleIdleAttention() {
+      clearTimeout(idleTimer);
     
+      idleTimer = setTimeout(() => {
+        if (!hasIntroed || isSleeping || isDozing) return;
+    
+        const idleGreet = ["I'm over here.","Over here...","What's the matter?","Can I help you?","I'm here."];
+    
+        setSpeech(getRandomGreet(idleGreet));
+    
+        scheduleIdleAttention();
+    
+      }, IDLE_DELAY);
+    }
+
     heranim.addEventListener("mouseenter", () => {
+      
+      speakbody.style.opacity = "1";
+      clearTimeout(idleTimer);
+
       cancelDoze();
       wakeUp();
 
@@ -290,20 +377,19 @@ function blinkInit() {
       const randomGreet = getRandomGreet(greet);
 
 
-      if (randomGreet === "Hey!") {
-        happy.style.opacity = "1"
-
-        setTimeout(() => {
-          happy.style.opacity = "0"
-        }, 2000);
-      }
-      setSpeech(randomGreet);
+      setSpeech(randomGreet, { cheery: randomGreet === "Hey!" });
     });
     
     heranim.addEventListener("mouseleave", () => {
-      setSpeech("...");
 
-      setTimeout(() => {
+      speakbody.style.opacity = "0"
+      setSpeech("...", { autoClose: true });
+      hideAllFaces()
+
+      clearTimeout(speechHideTimer);
+      scheduleIdleAttention();
+
+      speechHideTimer = setTimeout(() => {
         speaky.classList.add("hidden");
       }, HIDE_DELAY);
 
