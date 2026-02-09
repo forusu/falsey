@@ -1,0 +1,36 @@
+{
+    "たま": [
+      {
+        "title": "丘の上",
+        "file": "tama/okanoue.txt"
+      },
+      {
+        "title": "パルテノン銀座通り",
+        "file": "tama/parutenon.txt"
+      }
+    ],
+    "Yoll Cazami": [
+      {
+        "title": "Shower",
+        "file": "ycazami/shower.txt"
+      }
+    ],
+    "絶いぬ": [
+        {
+          "title": "雨垂",
+          "file": "zeinu/amadare.txt"
+        }
+    ],
+    "Mark Bernes": [
+        {
+          "title": "Dark is the night",
+          "file": "Mark Bernes/darknight.txt"
+        }
+    ],
+    "defalsified": [
+        {
+          "title": "Broken carousel",
+          "file": "defalsified/carousel.txt"
+        }
+    ]
+  }

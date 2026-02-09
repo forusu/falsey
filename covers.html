@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Covers</title>
+  <link rel="stylesheet" href="assets/index.css" media>
+  <link id="icon" rel="icon" href="assets/yh.svg">
+  <link rel="preload" as="font" href="../assets/VCR.ttf" crossorigin>
+
+  <link rel="preload" as="image" href="images/f_blink.webp">
+  <link rel="preload" as="image" href="images/f_speak.webp">
+  <link rel="preload" as="image" href="images/f_spblink.webp">
+  <link rel="preload" as="image" href="images/f_sphappy.webp">
+
+  <style>
+    @font-face {
+      font-family: "VCR";
+      src: url("../assets/VCR.ttf") format("truetype");
+      font-display: swap;
+    }
+    </style>
+
+  <meta property="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="keywords" content="falsequalified, fsq, aquifer, esquisse, pngtuber, streamer, portfolio">
+  <meta property="og:title" content="falsequalified">
+  <meta property="og:description" content="falsey's personal website, projects, lore">
+  <meta property="description" content="falsey's personal website, projects, lore">
+  
+  <meta property="og:image" content="https://falsey.mom/images/banner.webp">
+  <meta property="og:image:alt" content="A striking sunset.">
+  <meta property="og:image:width" content="2048">
+  <meta property="og:image:height" content="956">
+
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:site" content="@fsqs_">
+  <meta property="twitter:creator" content="@fsqs_">
+	
+  <meta property="og:author" content="made by Melissa <3">
+  <meta property="author" content="made by Melissa <3">
+  <meta property="theme-color" content="#ffb33b">
+
+  <script src="scripts/covers.js" defer></script>
+</head>
+
+<style>
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: "VCR";
+}
+
+body {
+    overflow: auto;
+}
+
+a {
+    position: absolute;
+    margin-bottom: 20vh;
+}
+
+.covers-page {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    height: 100vh;
+}
+
+.covers-list {
+    background: #0f0f0f;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.trans-list {
+    background: #0f0f0f;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.covers-list ul {
+    list-style: none;
+    padding-left: 0.5rem;
+}
+
+.artist,
+.song {
+    background: none;
+    border: none;
+    color: #d1d1d1;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.25rem 0;
+    text-align: left;
+    font-family: "VCR";
+}
+
+.artist {
+    transition: ease-in-out 0.5s; 
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+
+.artist::before {
+    content: "> "
+}
+
+.artactive {
+    font-weight: 700;
+    color: var(--hlb);
+}
+.artactive::before {
+    content: "-> "
+}
+
+.artist:hover {
+    font-weight: bolder;
+    color: var(--hlb);
+    transition: ease-in-out 0.5s; 
+}
+
+.song {
+    padding-left: 1rem;
+    opacity: 0.85;
+}
+
+.song::before {
+    content: "|- ";
+}
+
+.song:hover {
+    opacity: 1;
+    color: var(--hlb);
+    font-weight: bold;
+}
+
+.song.active {
+    color: var(--hl);
+    font-weight: 700;
+}
+
+.song.active::before {
+    content: "|-> ";
+}
+
+.cover-viewer {
+    padding: 2rem;
+    background: #121212;
+    display: flex;
+    overflow-y: auto;
+    color: var(--white)
+}
+
+.cover-box {
+    transition: ease-in 0.8s;
+    flex: 1;
+    background: #1f1f1f;
+    border-radius: 12px;
+    padding: 2rem;
+    overflow-y: auto;
+    white-space: pre-wrap;
+}
+
+.placeholder {
+    opacity: 0.6;
+    font-style: italic;
+}
+
+</style>
+
+<body>
+
+    <div class="covers-page">
+        <aside class="covers-list" id="coversList"><h1 class="hl">Covers</h1><p>by fsq</p></aside>
+      
+        <main class="cover-viewer">
+          <div class="cover-box" id="coverBox">
+            <p class="placeholder">Select a song to view the cover</p>
+          </div>
+        
+        </main>
+      </div>
+    
+</body>
