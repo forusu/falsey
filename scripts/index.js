@@ -434,29 +434,46 @@ async function loadBreakingNews() {
 }
 
 // Weather stuff:
+
 async function loadWeather() {
+  const empty = "NO WEATHER INFORMATION COULD BE FOUND";
+  const weatherEl = document.getElementById('weather');
+
   try {
-    const res = await fetch('https://wttr.in/?format=%l|%t|%f|%C|%c|%p', {
-      cache: 'no-store'
+    const format = encodeURIComponent('%l|%t|%f|%C|%c|%p');
+
+    const res = await fetch(`https://wttr.in/?format=${format}`, {
+      cache: 'no-store',
+      headers: {
+        'Accept': 'text/plain'
+      }
     });
 
-    const weatherEl = document.getElementById('weather');
-    const text = (await res.text()).trim();
-    const empty = "NO WEATHER INFORMATION COULD BE FOUND"
+    let text = (await res.text()).trim();
 
-    const [area, temp, feels, condition, emoji, precip] = text.split('|');
+    if (text.startsWith('<')) {
+      const match = text.match(
+        /<div class="term-container">(.*?)<\/div>/s
+      );
 
-    let output = `${area.toUpperCase()} - T:${temp} / F:${feels} | ${emoji} ${condition.toUpperCase()}`;
-
-    if (precip && precip !== '0mm') {
-      output += ` | PRECIPITATION: ${precip}`;
+      if (match) {
+        text = match[1].trim();
+      } else {
+        throw new Error('Could not extract weather data');
+      }
     }
 
-    if (!text) {
-      weatherEl.textContent = empty;
-    } else {
-      weatherEl.textContent = output;
+    const [area, temp, feels, condition, emoji, precip] =
+      text.split('|');
+
+    let Woutput =
+      `${area.toUpperCase()} - T:${temp} / F:${feels} | ${emoji} ${condition.toUpperCase()}`;
+
+    if (precip && precip !== '0.0mm' && precip !== '0mm') {
+      Woutput += ` | PRECIPITATION: ${precip}`;
     }
+
+    weatherEl.textContent = Woutput;
 
   } catch (err) {
     console.error('Weather fetch failed:', err);
